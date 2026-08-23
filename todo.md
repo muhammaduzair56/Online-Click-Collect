@@ -19,3 +19,12 @@
 - [x] Header mein dark-mode toggle add karke theme persistence verify karni hai.
 - [x] Dark mode mein contrast, product images, forms, FAQ aur Contact pages polish karni hain.
 - [x] Product detail, profile aur dark mode ko desktop/mobile previews mein verify karna hai.
+
+## Navigation, favorites, and gallery revision
+
+- [x] Navbar ko sticky/frosted state ke saath set karna hai.
+- [x] Wishlist/favorites ko local persistence aur active heart state ke saath add karna hai.
+- [x] Mobile floating WhatsApp button aur sticky cart bar add karna hai.
+- [x] Product detail page par multiple image gallery aur thumbnail selection add karni hai.
+- [x] Product image zoom modal/interaction aur close behavior add karna hai.
+- [x] Desktop aur mobile interaction previews verify karne hain.
