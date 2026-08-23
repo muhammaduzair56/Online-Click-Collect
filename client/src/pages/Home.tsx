@@ -76,7 +76,8 @@ export default function Home() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [favorites, setFavorites] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem("occ-favorites") || "[]") as string[]; } catch { return []; } });
   useEffect(() => { localStorage.setItem("occ-favorites", JSON.stringify(favorites)); }, [favorites]);
-  const toggleFavorite = (id: string) => { setFavorites((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id]); toast.success(favorites.includes(id) ? "Removed from favorites" : "Saved to favorites"); };
+  useEffect(() => { if (fastApi.isConfigured) void fastApi.favorites.then((remote) => { if (remote.length) setFavorites(remote); }).catch(() => undefined); }, []);
+  const toggleFavorite = (id: string) => { setFavorites((current) => { const next = current.includes(id) ? current.filter((item) => item !== id) : [...current, id]; if (fastApi.isConfigured) void fastApi.syncFavorites(next).catch(() => toast.error("Could not sync favorites")); return next; }); toast.success(favorites.includes(id) ? "Removed from favorites" : "Saved to favorites"); };
 
   const visibleProducts = useMemo(() => {
     return products.filter((product) => {

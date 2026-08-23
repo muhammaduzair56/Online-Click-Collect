@@ -28,3 +28,22 @@
 - [x] Product detail page par multiple image gallery aur thumbnail selection add karni hai.
 - [x] Product image zoom modal/interaction aur close behavior add karna hai.
 - [x] Desktop aur mobile interaction previews verify karne hain.
+
+## FastAPI connection revision
+
+- [ ] Central FastAPI base URL, auth headers, error handling aur API health state define karni hai.
+- [ ] Favorites ko local-only se authenticated FastAPI GET/PUT sync flow par move karna hai.
+- [ ] Admin product gallery upload input, previews, reorder aur remove states add karni hain.
+- [ ] Product gallery save/update endpoints ke frontend adapter methods add karne hain.
+- [ ] Frontend ko live API configured/unconfigured/error states ke saath connect karna hai.
+- [ ] Vercel environment variables aur FastAPI endpoint contract document karna hai.
+- [ ] Favorites, gallery management aur API states desktop/mobile par test karne hain.
+
+## JWT + Neon backend alignment
+
+- [x] API requests mein JWT Bearer token support add karna hai.
+- [x] Token save/clear helpers aur unauthorized state define karni hai.
+- [x] Favorites sync ko authenticated request ke saath verify karna hai.
+- [x] Admin gallery uploads aur order/product requests ko JWT header ke saath wire karna hai.
+- [x] Neon PostgreSQL ko frontend se connect na karke FastAPI API boundary document karni hai.
+- [x] FastAPI base URL missing/configured states ko clearly handle karna hai.
