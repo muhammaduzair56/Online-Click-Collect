@@ -18,10 +18,22 @@ export const auth = {
   clear() { localStorage.removeItem(TOKEN_KEY); },
 };
 
+let sessionRedirecting = false;
+
+function handleSessionExpiry() {
+  auth.clear();
+  if (typeof window !== "undefined" && !sessionRedirecting && !["/login", "/signup"].includes(window.location.pathname)) {
+    sessionRedirecting = true;
+    const next = `${window.location.pathname}${window.location.search}`;
+    window.location.assign(`/login?next=${encodeURIComponent(next)}`);
+  }
+}
+
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   if (!API_BASE) throw new Error("FastAPI is not connected yet. Add VITE_FASTAPI_URL to the Vercel environment variables.");
   const token = auth.token;
   const response = await fetch(`${API_BASE}${path}`, { ...options, headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}), ...(options?.headers || {}) }, credentials: "include" });
+  if (response.status === 401) { handleSessionExpiry(); throw new Error("Your session expired. Please sign in again."); }
   if (!response.ok) throw new Error((await response.text()) || `Request failed with ${response.status}`);
   return response.json() as Promise<T>;
 }
@@ -47,5 +59,7 @@ export const fastApi = {
   saveAddress: (payload: Omit<Address, "id">) => request<Address>("/api/me/addresses", { method: "POST", body: JSON.stringify(payload) }),
   deleteAddress: (id: string) => request<{ ok: boolean }>(`/api/me/addresses/${id}`, { method: "DELETE" }),
   updateOrder: (id: string, status: string) => request<Order>(`/api/orders/${id}/status`, { method: "PATCH", body: JSON.stringify({ status }) }),
+  notifyOrderStatus: (id: string) => request<{ queued: boolean }>(`/api/orders/${id}/status-notification`, { method: "POST" }),
+  getRecommendations: () => request<Product[]>("/api/me/recommendations"),
   submitReview: (payload: Review) => request<{ ok: boolean }>("/api/reviews", { method: "POST", body: JSON.stringify(payload) }),
 };

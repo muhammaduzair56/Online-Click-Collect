@@ -57,3 +57,13 @@
 - [x] Login mein spinner, field validation aur invalid-credentials error mapping add karni hai.
 - [x] Signup page aur FastAPI signup adapter add karna hai.
 - [x] Responsive states aur production build verify karna hai.
+
+## Notifications, session recovery, and recommendations revision
+
+- [x] JWT expiry/401 response par token clear, toast aur login redirect flow add karna hai.
+- [x] Redirect ke baad intended path preserve karna hai.
+- [x] Admin order-status update ke baad FastAPI notification endpoint call karna hai.
+- [x] WhatsApp notification payload, sent/pending/error states aur retry feedback add karna hai.
+- [x] Homepage par favorites aur order-history based Recommended for You section add karna hai.
+- [x] Recommendation loading, signed-out, no-history aur API-error states add karni hain.
+- [x] Responsive flows, TypeScript aur production build verify karna hai.

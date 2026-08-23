@@ -38,9 +38,20 @@ export default function Admin() {
 
   const updateOrder = async (id: string, status: string) => {
     setUpdatingOrderId(id);
-    try { const updated = await fastApi.updateOrder(id, status); setOrders((current) => current.map((order) => order.id === id ? updated : order)); toast.success(`Order ${id} marked ${status}`); }
-    catch (error) { toast.error(error instanceof Error ? error.message : "Could not update order"); }
-    finally { setUpdatingOrderId(null); }
+    try {
+      const updated = await fastApi.updateOrder(id, status);
+      setOrders((current) => current.map((order) => order.id === id ? updated : order));
+      try {
+        await fastApi.notifyOrderStatus(id);
+        toast.success(`Order ${id} marked ${status}`, { description: "WhatsApp notification queued for the customer." });
+      } catch {
+        toast.warning(`Order ${id} updated`, { description: "Status saved, but the WhatsApp notification could not be queued." });
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not update order");
+    } finally {
+      setUpdatingOrderId(null);
+    }
   };
 
   const nav = [{ label: "Overview", icon: LayoutDashboard }, { label: "Products", icon: Package }, { label: "Orders", icon: ShoppingBag }, { label: "Reviews", icon: Star }, { label: "Settings", icon: Settings2 }];
