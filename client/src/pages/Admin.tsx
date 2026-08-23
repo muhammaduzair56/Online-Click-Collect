@@ -41,12 +41,7 @@ export default function Admin() {
     try {
       const updated = await fastApi.updateOrder(id, status);
       setOrders((current) => current.map((order) => order.id === id ? updated : order));
-      try {
-        await fastApi.notifyOrderStatus(id);
-        toast.success(`Order ${id} marked ${status}`, { description: "WhatsApp notification queued for the customer." });
-      } catch {
-        toast.warning(`Order ${id} updated`, { description: "Status saved, but the WhatsApp notification could not be queued." });
-      }
+      toast.success(`Order ${id} marked ${status}`, { description: "Status saved. Contact the customer directly on WhatsApp when ready." });
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Could not update order");
     } finally {

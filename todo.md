@@ -67,3 +67,20 @@
 - [x] Homepage par favorites aur order-history based Recommended for You section add karna hai.
 - [x] Recommendation loading, signed-out, no-history aur API-error states add karni hain.
 - [x] Responsive flows, TypeScript aur production build verify karna hai.
+
+## Neon recommendations, reviews, and WhatsApp provider revision
+
+- [ ] Neon-backed FastAPI recommendation query contract define karna hai.
+- [ ] Favorites aur delivered order-line/category data ko recommendation response se connect karna hai.
+- [ ] Profile mein delivered orders filter, one-review-per-order state aur rating form add karna hai.
+- [ ] Review submission ko FastAPI approval endpoint se connect karna hai.
+- [ ] WhatsApp provider selection, credentials aur notification endpoint contract confirm karna hai.
+- [ ] Admin status update ke baad provider-backed notification request, queued/error/retry states add karni hain.
+- [ ] End-to-end configured/unconfigured API states aur production build verify karna hai.
+
+## Simplified owner-contact workflow
+
+- [x] Real WhatsApp provider notification call remove/disable karni hai.
+- [x] Admin order status update ko internal-only status tracking rakhna hai.
+- [x] Customer-facing copy mein direct owner WhatsApp contact clear karna hai.
+- [x] Status update ke baad owner-contact CTA aur simple feedback verify karna hai.
