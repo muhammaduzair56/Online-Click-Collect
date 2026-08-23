@@ -1,0 +1,38 @@
+/*
+  Online Click & Collect — owner admin panel.
+  Design reminder: use a quiet persistent sidebar, warm paper panels, clear operational hierarchy,
+  and never display fabricated customer reviews or order history.
+*/
+import { useEffect, useState } from "react";
+import { Box, CheckCircle2, ChevronDown, LayoutDashboard, Package, Plus, RefreshCw, Settings2, ShoppingBag, Star, Truck, Users } from "lucide-react";
+import { toast } from "sonner";
+import { fastApi, type Order, type Product } from "@/lib/api";
+
+const formatPrice = (value: number) => `Rs. ${value.toLocaleString("en-PK")}`;
+
+export default function Admin() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [activeNav, setActiveNav] = useState("Overview");
+
+  const loadData = async () => {
+    if (!fastApi.isConfigured) return;
+    setLoading(true);
+    try {
+      const [productData, orderData] = await Promise.all([fastApi.products, fastApi.orders]);
+      setProducts(productData); setOrders(orderData);
+    } catch (error) { toast.error(error instanceof Error ? error.message : "Could not load dashboard data"); }
+    finally { setLoading(false); }
+  };
+
+  useEffect(() => { void loadData(); }, []);
+
+  const updateOrder = async (id: string, status: string) => {
+    try { const updated = await fastApi.updateOrder(id, status); setOrders((current) => current.map((order) => order.id === id ? updated : order)); toast.success("Order status updated"); }
+    catch (error) { toast.error(error instanceof Error ? error.message : "Could not update order"); }
+  };
+
+  const nav = [{ label: "Overview", icon: LayoutDashboard }, { label: "Products", icon: Package }, { label: "Orders", icon: ShoppingBag }, { label: "Reviews", icon: Star }, { label: "Settings", icon: Settings2 }];
+  return <div className="min-h-screen bg-[#f5ede3] text-[#231f20]"><aside className="fixed inset-y-0 left-0 hidden w-64 flex-col border-r border-[#dfc9b8] bg-[#fffaf3] p-6 lg:flex"><a href="/" className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f7dfd8] text-[#c95b63]"><ShoppingBag size={18} /></div><div><p className="font-serif text-xl leading-none">Online</p><p className="text-[10px] font-extrabold uppercase tracking-[.18em] text-[#c95b63]">Click & Collect</p></div></a><p className="mt-12 text-[10px] font-extrabold uppercase tracking-[.2em] text-[#a77966]">Owner workspace</p><nav className="mt-4 grid gap-2">{nav.map(({ label, icon: Icon }) => <button key={label} onClick={() => setActiveNav(label)} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold transition ${activeNav === label ? "bg-[#f7dfd8] text-[#c95b63]" : "text-[#796b62] hover:bg-[#f5ede3]"}`}><Icon size={17} strokeWidth={1.8} />{label}</button>)}</nav><div className="mt-auto rounded-2xl border border-[#dfc9b8] bg-[#f5ede3] p-4"><p className="text-xs font-bold">FastAPI connection</p><p className="mt-1 text-xs leading-5 text-[#796b62]">Connect the API URL in Vercel settings to make this dashboard live.</p><a href="/" className="mt-3 inline-flex text-xs font-bold text-[#c95b63]">Back to store →</a></div></aside><main className="lg:pl-64"><header className="flex items-center justify-between border-b border-[#dfc9b8] bg-[#fffaf3] px-5 py-5 lg:px-10"><div><p className="eyebrow">Owner workspace</p><h1 className="mt-1 font-serif text-3xl">{activeNav}</h1></div><div className="flex items-center gap-2"><button onClick={() => void loadData()} className="icon-button" aria-label="Refresh dashboard"><RefreshCw size={18} className={loading ? "animate-spin" : ""} /></button><a href="/" className="rounded-full border border-[#d8c7b8] px-4 py-2 text-xs font-bold text-[#6b5e56]">View store</a></div></header><div className="container py-8 lg:py-10">{!fastApi.isConfigured && <div className="mb-8 flex flex-col justify-between gap-4 rounded-2xl border border-[#e1c28e] bg-[#fff4d9] p-5 sm:flex-row sm:items-center"><div className="flex gap-3"><Truck className="mt-0.5 text-[#b98942]" size={20} /><div><p className="font-bold text-[#5f4935]">FastAPI is not connected yet</p><p className="mt-1 max-w-2xl text-sm leading-6 text-[#806a51]">Add <code className="rounded bg-[#f8e7bb] px-1">VITE_FASTAPI_URL</code> in Vercel, then this panel will load live products and orders.</p></div></div><button onClick={() => toast("Add VITE_FASTAPI_URL in your Vercel project settings")} className="shrink-0 rounded-full bg-[#231f20] px-4 py-2 text-xs font-bold text-[#fffaf3]">Connection guide</button></div>}<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{[{ label: "Active products", value: products.length, icon: Package }, { label: "Open orders", value: orders.filter((order) => !["Delivered", "Cancelled"].includes(order.status)).length, icon: ShoppingBag }, { label: "Reviews pending", value: "—", icon: Star }, { label: "Customers", value: "—", icon: Users }].map(({ label, value, icon: Icon }) => <div key={label} className="rounded-2xl border border-[#dfc9b8] bg-[#fffaf3] p-5"><div className="flex items-center justify-between"><span className="text-sm text-[#796b62]">{label}</span><Icon size={18} className="text-[#c95b63]" /></div><p className="mt-4 font-serif text-3xl">{value}</p></div>)}</div><section className="mt-10 rounded-2xl border border-[#dfc9b8] bg-[#fffaf3] p-5 lg:p-7"><div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center"><div><p className="eyebrow">Operations</p><h2 className="mt-1 font-serif text-2xl">Recent orders</h2></div><button onClick={() => toast("Product creation will be available after the FastAPI endpoint is connected.")} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#c95b63] px-4 py-2.5 text-xs font-bold text-white"><Plus size={15} /> Add product</button></div>{orders.length ? <div className="mt-6 overflow-x-auto"><table className="w-full min-w-[680px] text-left text-sm"><thead className="border-b border-[#eadfd3] text-[10px] font-extrabold uppercase tracking-[.14em] text-[#a77966]"><tr><th className="pb-3">Order</th><th className="pb-3">Customer</th><th className="pb-3">Total</th><th className="pb-3">Status</th><th className="pb-3">Update</th></tr></thead><tbody>{orders.map((order) => <tr key={order.id} className="border-b border-[#f0e5da]"><td className="py-4 font-bold">{order.id}</td><td className="py-4">{order.customer_name}<span className="block text-xs text-[#927c6d]">{order.phone}</span></td><td className="py-4 font-bold">{formatPrice(order.total)}</td><td className="py-4"><span className="rounded-full bg-[#f5ede3] px-3 py-1 text-xs font-bold">{order.status}</span></td><td className="py-4"><select value={order.status} onChange={(event) => void updateOrder(order.id, event.target.value)} className="rounded-lg border border-[#d8c7b8] bg-[#fffaf3] px-2 py-1.5 text-xs"><option>New</option><option>Confirmed</option><option>Packed</option><option>Dispatched</option><option>Delivered</option><option>Cancelled</option></select></td></tr>)}</tbody></table></div> : <div className="mt-6 rounded-2xl border border-dashed border-[#d8c7b8] bg-[#f5ede3]/45 p-10 text-center"><CheckCircle2 size={28} className="mx-auto text-[#c95b63]" /><h3 className="mt-4 font-serif text-xl">No live orders loaded</h3><p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#796b62]">Connect the FastAPI service to see real orders here. Demo orders are intentionally not shown.</p></div>}</section></div></main></div>;
+}
