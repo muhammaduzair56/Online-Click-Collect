@@ -47,3 +47,13 @@
 - [x] Admin gallery uploads aur order/product requests ko JWT header ke saath wire karna hai.
 - [x] Neon PostgreSQL ko frontend se connect na karke FastAPI API boundary document karni hai.
 - [x] FastAPI base URL missing/configured states ko clearly handle karna hai.
+
+## Loading and status feedback revision
+
+- [x] Profile order history aur saved addresses ke liye skeleton loading states add karni hain.
+- [x] Favorites data ke liye loading/error/empty states add karni hain.
+- [x] Admin order status options Pending, Confirmed, Packed, Shipped, Delivered aur Cancelled karni hain.
+- [x] Status update ke baad toast, disabled/loading state aur UI reflection add karna hai.
+- [x] Login mein spinner, field validation aur invalid-credentials error mapping add karni hai.
+- [x] Signup page aur FastAPI signup adapter add karna hai.
+- [x] Responsive states aur production build verify karna hai.

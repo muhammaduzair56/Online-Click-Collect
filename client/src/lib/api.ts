@@ -28,6 +28,7 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 
 export const fastApi = {
   login: async (email: string, password: string) => { const data = await request<{ access_token: string }>("/api/auth/login", { method: "POST", body: JSON.stringify({ email, password }) }); auth.setToken(data.access_token); return data; },
+  signup: async (name: string, email: string, password: string) => { const data = await request<{ access_token: string }>("/api/auth/signup", { method: "POST", body: JSON.stringify({ name, email, password }) }); auth.setToken(data.access_token); return data; },
   logout: () => auth.clear(),
   get isConfigured() { return Boolean(API_BASE); },
   get products() { return request<Product[]>("/api/products"); },
