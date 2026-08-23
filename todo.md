@@ -84,3 +84,12 @@
 - [x] Admin order status update ko internal-only status tracking rakhna hai.
 - [x] Customer-facing copy mein direct owner WhatsApp contact clear karna hai.
 - [x] Status update ke baad owner-contact CTA aur simple feedback verify karna hai.
+
+## Orders and delivery pricing revision
+
+- [x] FastAPI orders endpoint loading, auth aur error states verify karne hain.
+- [x] Admin order status update ko real endpoint response ke saath reflect karna hai.
+- [x] Delivery pricing rule define karni hai: Karachi aur Pakistan-wide rates.
+- [x] Checkout/cart summary mein subtotal, delivery charge aur grand total show karna hai.
+- [x] Free-delivery threshold ya unavailable-area message handle karna hai.
+- [x] Sticky navbar desktop/mobile aur checkout totals test karne hain.
