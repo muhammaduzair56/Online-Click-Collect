@@ -11,6 +11,8 @@ import {
   Heart,
   Menu,
   Minus,
+  Moon,
+  Sun,
   PackageCheck,
   Plus,
   Search,
@@ -23,6 +25,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { fastApi } from "@/lib/api";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const heroImage = "/manus-storage/occ-hero-shopping-table_c4278f8c.jpg";
 const kitchenImage = "/manus-storage/occ-kitchen-edit_5601cbac.jpg";
@@ -58,6 +61,7 @@ const products = [
 const formatPrice = (value: number) => `Rs. ${value.toLocaleString("en-PK")}`;
 
 export default function Home() {
+  const { theme, toggleTheme } = useTheme();
   const [activeCategory, setActiveCategory] = useState("All finds");
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -142,11 +146,11 @@ export default function Home() {
             <a className="transition-colors hover:text-[#c95b63]" href="#shop">Shop all</a>
             <a className="transition-colors hover:text-[#c95b63]" href="#categories">Categories</a>
             <a className="transition-colors hover:text-[#c95b63]" href="#how-it-works">How it works</a>
-            <a className="transition-colors hover:text-[#c95b63]" href="#story">Our story</a><a className="transition-colors hover:text-[#c95b63]" href="/faq">FAQs</a>
+            <a className="transition-colors hover:text-[#c95b63]" href="#story">Our story</a><a className="transition-colors hover:text-[#c95b63]" href="/faq">FAQs</a><a className="transition-colors hover:text-[#c95b63]" href="/profile">Profile</a>
           </nav>
 
           <div className="flex items-center gap-2">
-            <button onClick={() => setSearchOpen((open) => !open)} className="icon-button" aria-label="Search products"><Search size={19} strokeWidth={1.8} /></button>
+            <button onClick={() => setSearchOpen((open) => !open)} className="icon-button" aria-label="Search products"><Search size={19} strokeWidth={1.8} /></button><button onClick={() => toggleTheme?.()} className="icon-button" aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}>{theme === "dark" ? <Sun size={19} strokeWidth={1.8} /> : <Moon size={19} strokeWidth={1.8} />}</button>
             <button onClick={() => setCartOpen(true)} className="relative flex h-10 items-center gap-2 rounded-full border border-[#d8c7b8] bg-[#fffdf8] px-3 text-[12px] font-bold text-[#231f20] transition-all hover:-translate-y-0.5 hover:border-[#c95b63]">
               <ShoppingBag size={18} strokeWidth={1.8} /> <span className="hidden sm:inline">My bag</span>
               {cartCount > 0 && <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#c95b63] px-1 text-[10px] text-white">{cartCount}</span>}
@@ -185,7 +189,7 @@ export default function Home() {
         <section id="shop" className="border-y border-[#eadfd3] bg-[#f5ede3] py-20 lg:py-28">
           <div className="container">
             <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end"><div><p className="eyebrow">The current edit</p><h2 className="section-title">Useful things, chosen well.</h2></div><div className="flex w-full max-w-[520px] flex-col gap-3"><label className="relative block"><Search size={17} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#a58f83]" /><input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search products by name..." aria-label="Search products" className="w-full rounded-full border border-[#d9c5b5] bg-[#fffaf3] py-3 pl-11 pr-4 text-sm outline-none transition focus:border-[#c95b63] focus:ring-2 focus:ring-[#f0c4be]" /></label><div className="flex flex-wrap items-center justify-end gap-2"><button onClick={() => setActiveCategory("All finds")} className={activeCategory === "All finds" ? "filter-pill active" : "filter-pill"}>All finds</button>{["Kitchen", "Beauty & Care", "Home Living", "Gadgets"].map((category) => <button key={category} onClick={() => setActiveCategory(category)} className={activeCategory === category ? "filter-pill active" : "filter-pill"}>{category}</button>)}</div></div></div>
-            {visibleProducts.length ? <div className="grid gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">{visibleProducts.map((product) => <article key={product.id} className="group"><div className="product-image"><img src={product.image} alt={product.name} /><span className="product-tag">{product.tag}</span><button className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-[#fffaf3]/90 text-[#6b5e56] transition hover:bg-[#c95b63] hover:text-white" aria-label={`Save ${product.name}`}><Heart size={16} /></button><button disabled={addingId === product.id} onClick={() => void addToCart(product.id)} className="add-button">{addingId === product.id ? <><span className="loading-dot" /> Adding...</> : <>Add to bag <Plus size={16} /></>}</button></div><div className="mt-4 flex items-start justify-between gap-3"><div><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9a796b]">{product.category} <span className="mx-1 text-[#c95b63]">/</span> {product.id}</p><h3 className="mt-1 font-serif text-[21px] leading-tight text-[#231f20]">{product.name}</h3></div><div className="shrink-0 text-right"><p className="font-bold text-[#231f20]">{formatPrice(product.price)}</p><p className="text-xs text-[#a58f83] line-through">{formatPrice(product.oldPrice)}</p></div></div></article>)}</div> : <div className="rounded-3xl border border-dashed border-[#d4beaa] bg-[#fffaf3] p-12 text-center"><p className="font-serif text-2xl">Nothing in this edit yet.</p><button onClick={() => { setSearchTerm(""); setActiveCategory("All finds"); }} className="mt-4 text-sm font-bold text-[#c95b63]">Reset the view</button></div>}
+            {visibleProducts.length ? <div className="grid gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">{visibleProducts.map((product) => <article key={product.id} className="group"><div className="product-image"><img src={product.image} alt={product.name} /><span className="product-tag">{product.tag}</span><button className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-[#fffaf3]/90 text-[#6b5e56] transition hover:bg-[#c95b63] hover:text-white" aria-label={`Save ${product.name}`}><Heart size={16} /></button><button disabled={addingId === product.id} onClick={() => void addToCart(product.id)} className="add-button">{addingId === product.id ? <><span className="loading-dot" /> Adding...</> : <>Add to bag <Plus size={16} /></>}</button></div><div className="mt-4 flex items-start justify-between gap-3"><div><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9a796b]">{product.category} <span className="mx-1 text-[#c95b63]">/</span> {product.id}</p><a href={`/product/${product.id}`} className="mt-1 block font-serif text-[21px] leading-tight text-[#231f20] transition hover:text-[#c95b63]">{product.name}</a></div><div className="shrink-0 text-right"><p className="font-bold text-[#231f20]">{formatPrice(product.price)}</p><p className="text-xs text-[#a58f83] line-through">{formatPrice(product.oldPrice)}</p></div></div></article>)}</div> : <div className="rounded-3xl border border-dashed border-[#d4beaa] bg-[#fffaf3] p-12 text-center"><p className="font-serif text-2xl">Nothing in this edit yet.</p><button onClick={() => { setSearchTerm(""); setActiveCategory("All finds"); }} className="mt-4 text-sm font-bold text-[#c95b63]">Reset the view</button></div>}
           </div>
         </section>
 

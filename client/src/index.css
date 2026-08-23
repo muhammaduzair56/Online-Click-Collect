@@ -158,3 +158,18 @@ a { transition: color 180ms ease, opacity 180ms ease; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+
+/* Dark mode overrides for the branded Tailwind utility surfaces. */
+.dark body { background: #171416; color: #f7efe7; background-image: radial-gradient(rgba(246, 210, 189, .035) .6px, transparent .6px); }
+.dark [class*="bg-[#fffaf3]"] { background-color: #201b1d !important; }
+.dark [class*="bg-[#fffdf8]"] { background-color: #241f21 !important; }
+.dark [class*="bg-[#f5ede3]"] { background-color: #2b2426 !important; }
+.dark [class*="bg-[#f7dfd8]"] { background-color: #4b2d32 !important; }
+.dark [class*="bg-[#231f20]"] { background-color: #100e0f !important; }
+.dark [class*="text-[#231f20]"] { color: #f7efe7 !important; }
+.dark [class*="text-[#796b62]"], .dark [class*="text-[#6b5e56]"], .dark [class*="text-[#62554d]"] { color: #cdbeb5 !important; }
+.dark [class*="text-[#927c6d]"], .dark [class*="text-[#a58f83]"], .dark [class*="text-[#9a796b]"] { color: #bfa79b !important; }
+.dark [class*="border-[#eadfd3]"], .dark [class*="border-[#dfc9b8]"], .dark [class*="border-[#d8c7b8]"] { border-color: #4b3b3d !important; }
+.dark .product-image { background: #3a2d2f; }
+.dark input, .dark textarea, .dark select { color: #f7efe7; background-color: #2b2426 !important; border-color: #5b4648 !important; }
+.dark input::placeholder, .dark textarea::placeholder { color: #a9948b; }

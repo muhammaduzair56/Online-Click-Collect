@@ -6,6 +6,7 @@
 export type Product = { id: string; name: string; category: string; price: number; stock: number; image_url?: string; is_active: boolean };
 export type Order = { id: string; customer_name: string; phone: string; total: number; status: string; created_at: string };
 export type Review = { order_number: string; rating: number; text: string };
+export type Address = { id: string; label: string; recipient_name: string; phone: string; city: string; address_line: string; landmark?: string; is_default: boolean };
 
 const API_BASE = (import.meta.env.VITE_FASTAPI_URL || "").replace(/\/$/, "");
 
@@ -19,9 +20,14 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 export const fastApi = {
   get isConfigured() { return Boolean(API_BASE); },
   get products() { return request<Product[]>("/api/products"); },
+  getProduct: (id: string) => request<Product>(`/api/products/${id}`),
   createProduct: (payload: Omit<Product, "id" | "is_active">) => request<Product>("/api/products", { method: "POST", body: JSON.stringify(payload) }),
   updateProduct: (id: string, payload: Partial<Product>) => request<Product>(`/api/products/${id}`, { method: "PATCH", body: JSON.stringify(payload) }),
   get orders() { return request<Order[]>("/api/orders"); },
+  get myOrders() { return request<Order[]>("/api/me/orders"); },
+  get myAddresses() { return request<Address[]>("/api/me/addresses"); },
+  saveAddress: (payload: Omit<Address, "id">) => request<Address>("/api/me/addresses", { method: "POST", body: JSON.stringify(payload) }),
+  deleteAddress: (id: string) => request<{ ok: boolean }>(`/api/me/addresses/${id}`, { method: "DELETE" }),
   updateOrder: (id: string, status: string) => request<Order>(`/api/orders/${id}/status`, { method: "PATCH", body: JSON.stringify({ status }) }),
   submitReview: (payload: Review) => request<{ ok: boolean }>("/api/reviews", { method: "POST", body: JSON.stringify(payload) }),
 };
