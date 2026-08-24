@@ -141,3 +141,11 @@
 - [x] Search input ke neeche product-name/category suggestions aur keyboard-friendly selection add karni hai.
 - [x] Suggestion select karne par shop results filter/scroll karne hain.
 - [x] Mobile/desktop preview, TypeScript aur production build verify karna hai.
+
+## Live FastAPI navbar search
+
+- [x] FastAPI products endpoint se live catalog state load karni hai.
+- [x] Live products ko navbar suggestion shape mein normalize karna hai.
+- [x] Loading, API error, empty catalog aur local fallback states handle karni hain.
+- [x] Suggestion selection ko live product data, filtering aur shop scroll ke saath connect karna hai.
+- [x] TypeScript, production build aur responsive preview verify karna hai.
