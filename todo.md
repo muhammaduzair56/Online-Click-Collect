@@ -242,3 +242,11 @@
 - [x] Product fields, validation, active status, loading/error/success states connect karna.
 - [x] Product list, edit actions aur existing gallery manager ko preserve karke verify karna.
 - [x] Responsive admin UI, TypeScript/build, GitHub push aur checkpoint verify karna.
+
+## Direct product image upload
+
+- [x] ProductManager ke current URL/image fields aur gallery upload contract audit karna.
+- [x] Add/Edit form mein direct image picker, type/size validation aur preview add karna.
+- [x] Create ke baad upload karke returned gallery URL ko main image set karna.
+- [x] Edit flow mein uploaded image se main image replace karna aur old gallery behavior preserve karna.
+- [x] Upload progress/error states, build, responsive UI, GitHub push aur checkpoint verify karna.
