@@ -55,6 +55,7 @@ export const fastApi = {
   reorderProductGallery: (productId: string, imageIds: string[]) => request<GalleryImage[]>(`/api/products/${productId}/gallery/reorder`, { method: "PUT", body: JSON.stringify({ image_ids: imageIds }) }),
   get orders() { return request<Order[]>("/api/orders"); },
   get myOrders() { return request<Order[]>("/api/me/orders"); },
+  trackOrder: (orderId: string) => request<Order>(`/api/orders/${encodeURIComponent(orderId.trim())}/tracking`),
   get myAddresses() { return request<Address[]>("/api/me/addresses"); },
   saveAddress: (payload: Omit<Address, "id">) => request<Address>("/api/me/addresses", { method: "POST", body: JSON.stringify(payload) }),
   deleteAddress: (id: string) => request<{ ok: boolean }>(`/api/me/addresses/${id}`, { method: "DELETE" }),

@@ -93,3 +93,12 @@
 - [x] Checkout/cart summary mein subtotal, delivery charge aur grand total show karna hai.
 - [x] Free-delivery threshold ya unavailable-area message handle karna hai.
 - [x] Sticky navbar desktop/mobile aur checkout totals test karne hain.
+
+## Tracking, filters, city pricing, and GitHub revision
+
+- [x] Public Track Order route aur order-ID form add karna hai.
+- [x] FastAPI order-tracking endpoint contract aur loading/error/not-found states add karni hain.
+- [x] Admin orders mein status filter, search field aur empty state add karna hai.
+- [x] Checkout city dropdown aur city-specific delivery rates define karni hain.
+- [x] Subtotal, city delivery charge aur grand total WhatsApp message mein preserve karna hai.
+- [x] TypeScript, production build, responsive previews aur GitHub repository push verify karna hai.
