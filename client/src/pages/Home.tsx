@@ -68,6 +68,7 @@ export default function Home() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchSuggestionsOpen, setSearchSuggestionsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [cart, setCart] = useState<{ id: string; quantity: number }[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [deliveryCity, setDeliveryCity] = useState("Karachi");
@@ -85,6 +86,7 @@ export default function Home() {
   const [recommended, setRecommended] = useState<typeof products>([]);
   const [recommendationLoading, setRecommendationLoading] = useState(false);
   useEffect(() => { localStorage.setItem("occ-favorites", JSON.stringify(favorites)); }, [favorites]);
+  useEffect(() => { const onScroll = () => setIsScrolled(window.scrollY > 12); window.addEventListener("scroll", onScroll, { passive: true }); onScroll(); return () => window.removeEventListener("scroll", onScroll); }, []);
   useEffect(() => { if (fastApi.isConfigured) void fastApi.favorites.then((remote) => { if (remote.length) setFavorites(remote); }).catch(() => undefined); }, []);
   useEffect(() => { if (!fastApi.isConfigured) return; setRecommendationLoading(true); void fastApi.getRecommendations().then((remote) => { setRecommended(remote.map((item) => ({ ...item, oldPrice: item.price, tag: "Picked for you", image: item.image_url || productImages.organiser, color: "cream" }))); }).catch(() => setRecommended([])).finally(() => setRecommendationLoading(false)); }, []);
   const toggleFavorite = (id: string) => { setFavorites((current) => { const next = current.includes(id) ? current.filter((item) => item !== id) : [...current, id]; if (fastApi.isConfigured) void fastApi.syncFavorites(next).catch(() => toast.error("Could not sync favorites")); return next; }); toast.success(favorites.includes(id) ? "Removed from favorites" : "Saved to favorites"); };
@@ -161,7 +163,7 @@ export default function Home() {
         Cash on delivery available <span className="mx-2 text-[#e6af62]">•</span> Karachi delivery
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-[#eadfd3] bg-[#fffaf3]/95 shadow-[0_8px_24px_rgba(74,47,35,.06)] backdrop-blur-xl">
+      <header className={`sticky top-0 z-[60] border-b border-[#eadfd3] backdrop-blur-xl transition-[background-color,box-shadow] duration-200 ${isScrolled ? "bg-[#fffaf3]/98 shadow-[0_10px_30px_rgba(74,47,35,.14)]" : "bg-[#fffaf3]/95 shadow-[0_8px_24px_rgba(74,47,35,.06)]"}`} style={{ WebkitBackdropFilter: "blur(18px)" }}>
         <div className="container flex h-[76px] items-center justify-between gap-6">
           <a href="#top" className="flex shrink-0 items-center gap-3" aria-label="Online Click & Collect home">
             <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-[#dbb1a4] bg-[#f7dfd8] p-1 shadow-[0_7px_20px_rgba(35,31,32,0.08)]">
@@ -193,7 +195,7 @@ export default function Home() {
         {menuOpen && <div className="border-t border-[#eadfd3] bg-[#fffdf8] px-4 py-4 lg:hidden"><div className="container grid gap-3 text-sm font-bold"><a href="#shop" onClick={() => setMenuOpen(false)}>Shop all</a><a href="#categories" onClick={() => setMenuOpen(false)}>Categories</a><a href="#how-it-works" onClick={() => setMenuOpen(false)}>How it works</a><a href="#story" onClick={() => setMenuOpen(false)}>Our story</a><a href="/faq" onClick={() => setMenuOpen(false)}>FAQs</a><a href="/contact" onClick={() => setMenuOpen(false)}>Contact</a></div></div>}
       </header>
 
-      <main id="top">
+      <main id="top" className="scroll-pt-24">
         <section className="relative isolate overflow-hidden border-b border-[#eadfd3]">
           <div className="absolute inset-y-0 right-0 -z-10 hidden w-[54%] overflow-hidden lg:block"><img src={heroImage} alt="Curated everyday products on a warm table" className="h-full w-full object-cover object-center" /><div className="absolute inset-0 bg-gradient-to-r from-[#fffaf3] via-[#fffaf3]/40 to-transparent" /></div>
           <div className="container grid min-h-[610px] items-center gap-10 py-16 lg:grid-cols-[0.92fr_1.08fr] lg:py-20">
