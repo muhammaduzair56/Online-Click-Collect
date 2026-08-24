@@ -120,3 +120,16 @@
 - [x] Cancelled order ke baad direct owner WhatsApp CTA show karna hai.
 - [x] Navbar ko desktop/mobile par sticky, visible aur non-overlapping verify karna hai.
 - [x] Frontend/backend tests, build aur GitHub push verify karna hai.
+
+## Complete FastAPI + Neon backend revision
+
+- [x] Frontend api.ts ke tamam endpoints aur request/response types inventory karni hain.
+- [x] Neon schema mein users, products, gallery_images, favorites, carts, addresses, orders, order_items, reviews aur status history tables add karni hain.
+- [x] JWT signup, login, current-user aur expiry-safe auth dependencies add karni hain.
+- [x] Product listing/detail, gallery upload/delete aur admin product management APIs add karni hain.
+- [x] Favorites, cart, saved addresses aur delivered-order review APIs add karni hain.
+- [x] Checkout/order creation, customer order history, tracking, cancellation, recommendations aur admin order status APIs add karni hain.
+- [x] Railway start command, environment template, migrations/schema instructions aur health check document karna hai.
+- [x] Frontend API paths ko completed backend contracts ke saath align karna hai.
+- [x] Navbar sticky/fixed behavior desktop aur mobile par verify karke final polish karni hai.
+- [x] Frontend build, backend syntax/tests aur GitHub push verify karna hai.
