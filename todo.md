@@ -228,3 +228,9 @@
 - [x] Login/Signup loading, error aur success feedback ko robust banana.
 - [x] Logged-in Profile mein FastAPI order history loading, empty, error aur populated states verify/add karna.
 - [x] Responsive UI, TypeScript/build aur authenticated flow push/checkpoint verify karna.
+
+## Browser favicon
+
+- [x] Document head aur brand mark asset audit karna.
+- [x] Brand mark favicon aur theme metadata add karna.
+- [x] Build, favicon URL aur deployment readiness verify karke push/checkpoint save karna.
