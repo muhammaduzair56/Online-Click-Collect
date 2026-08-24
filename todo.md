@@ -199,4 +199,11 @@
 - [x] SPA route rewrites aur deployment configuration add karna.
 - [x] Vercel environment variables aur FastAPI contract document karna.
 - [x] Production build aur direct deep-link routes verify karna.
-- [ ] Deployment-ready frontend ko GitHub main branch par push karke checkpoint save karna.
+- [x] Deployment-ready frontend ko GitHub main branch par push karke checkpoint save karna.
+
+## Vercel image loading fix
+
+- [ ] Deployed Vercel page par broken image requests identify karna.
+- [ ] `/manus-storage` production-only references ko deployable public asset URLs se replace karna.
+- [ ] Hero, logo, product, category aur supporting images ke load states verify karna.
+- [ ] Production build, public URL aur GitHub update complete karna.

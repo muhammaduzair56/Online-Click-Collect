@@ -28,17 +28,17 @@ import { toast } from "sonner";
 import { fastApi } from "@/lib/api";
 import { useTheme } from "@/contexts/ThemeContext";
 
-const heroImage = "/manus-storage/occ-reference-hero-art_3c1216db.jpg";
-const heroLeftImage = "/manus-storage/occ-reference-hero-left_51c3eb50.jpg";
-const kitchenImage = "/manus-storage/occ-kitchen-edit_5601cbac.jpg";
-const packingImage = "/manus-storage/occ-packing-scene_0ea18bf0.jpg";
-const markImage = "/manus-storage/occ-bazaar-mark_77a87338.png";
+const heroImage = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/eNpEabmfOdEnGTeq.jpg";
+const heroLeftImage = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/eEPuschtzmcFwIin.jpg";
+const kitchenImage = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/ciyYfUTXATlEKsow.jpg";
+const packingImage = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/yDDyfGzmRkLHLGqp.jpg";
+const markImage = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/HNQkrrBgCofwNJAF.png";
 const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "923001234567";
 
 const productImages = {
-  chopper: "/manus-storage/occ-reference-product-one_3ee4e8f2.jpg",
-  organiser: "/manus-storage/occ-reference-product-three_0933c758.jpg",
-  bottle: "/manus-storage/occ-reference-product-two_47d5458f.jpg",
+  chopper: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/AftGDRZRuMFQWuUQ.jpg",
+  organiser: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/RyETWvrwonSCGcoV.jpg",
+  bottle: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/AfirCwLfVymcpEwt.jpg",
   lamp: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=85",
   earbuds: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=900&q=85",
   stitch: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=900&q=85",
