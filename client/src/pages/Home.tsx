@@ -28,16 +28,17 @@ import { toast } from "sonner";
 import { fastApi } from "@/lib/api";
 import { useTheme } from "@/contexts/ThemeContext";
 
-const heroImage = "/manus-storage/occ-hero-shopping-table_c4278f8c.jpg";
+const heroImage = "/manus-storage/occ-reference-hero-art_3c1216db.jpg";
+const heroLeftImage = "/manus-storage/occ-reference-hero-left_51c3eb50.jpg";
 const kitchenImage = "/manus-storage/occ-kitchen-edit_5601cbac.jpg";
 const packingImage = "/manus-storage/occ-packing-scene_0ea18bf0.jpg";
 const markImage = "/manus-storage/occ-bazaar-mark_77a87338.png";
 const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "923001234567";
 
 const productImages = {
-  chopper: "https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?auto=format&fit=crop&w=900&q=85",
-  organiser: "https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=900&q=85",
-  bottle: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=900&q=85",
+  chopper: "/manus-storage/occ-reference-product-one_3ee4e8f2.jpg",
+  organiser: "/manus-storage/occ-reference-product-three_0933c758.jpg",
+  bottle: "/manus-storage/occ-reference-product-two_47d5458f.jpg",
   lamp: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=85",
   earbuds: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=900&q=85",
   stitch: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=900&q=85",
@@ -163,32 +164,31 @@ export default function Home() {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#fffaf3] text-[#231f20] selection:bg-[#f3c5be] selection:text-[#231f20]">
-      <div className="bg-[#231f20] px-4 py-2 text-center text-[11px] font-bold uppercase tracking-[0.24em] text-[#fffaf3]">
-        Cash on delivery available <span className="mx-2 text-[#e6af62]">•</span> Karachi delivery
+      <div className="h-9 overflow-hidden whitespace-nowrap bg-[#231f20] px-4 py-2 text-center text-[10px] font-bold uppercase tracking-[0.16em] text-[#fffaf3] sm:text-[11px] sm:tracking-[0.24em]">
+        Free delivery on orders above Rs. 2,500 in Karachi <span className="mx-2 text-[#e6af62]">•</span> Cash on delivery <span className="mx-2 text-[#e6af62]">•</span> Easy returns
       </div>
 
-      <header className={`sticky top-0 z-[60] border-b border-[#eadfd3] backdrop-blur-xl transition-[background-color,box-shadow] duration-200 ${isScrolled ? "bg-[#fffaf3]/98 shadow-[0_10px_30px_rgba(74,47,35,.14)]" : "bg-[#fffaf3]/95 shadow-[0_8px_24px_rgba(74,47,35,.06)]"}`} style={{ WebkitBackdropFilter: "blur(18px)" }}>
-        <div className="container flex h-[76px] items-center justify-between gap-6">
+      <header className={`fixed inset-x-0 z-[60] border-b border-[#eadfd3] backdrop-blur-xl transition-[top,background-color,box-shadow] duration-200 ${isScrolled ? "top-0 bg-[#fffaf3]/98 shadow-[0_10px_30px_rgba(74,47,35,.14)]" : "top-[36px] bg-[#fffaf3]/95 shadow-[0_8px_24px_rgba(74,47,35,.06)]"}`} style={{ WebkitBackdropFilter: "blur(18px)" }}>
+        <div className="container flex h-[84px] items-center justify-between gap-6">
           <a href="#top" className="flex shrink-0 items-center gap-3" aria-label="Online Click & Collect home">
             <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-[#dbb1a4] bg-[#f7dfd8] p-1 shadow-[0_7px_20px_rgba(35,31,32,0.08)]">
               <img src={markImage} alt="" className="h-full w-full object-contain" />
             </div>
             <div className="leading-none">
-              <p className="font-serif text-[20px] font-semibold tracking-[-0.04em] text-[#231f20]">Online</p>
-              <p className="-mt-0.5 text-[13px] font-extrabold uppercase tracking-[0.18em] text-[#c95b63]">Click & Collect</p>
+              <p className="font-serif text-[22px] font-semibold tracking-[-0.045em] text-[#2c1e1a]">Online Click & Collect</p>
+              <p className="mt-1 text-[10px] font-serif uppercase tracking-[0.2em] text-[#947b6c]">— Your bazaar, one click away —</p>
             </div>
           </a>
 
           <nav className="hidden items-center gap-7 text-[12px] font-bold uppercase tracking-[0.14em] text-[#5d514b] lg:flex">
-            <a className="transition-colors hover:text-[#c95b63]" href="#shop">Shop all</a>
-            <a className="transition-colors hover:text-[#c95b63]" href="#categories">Categories</a>
-            <a className="transition-colors hover:text-[#c95b63]" href="#how-it-works">How it works</a>
-            <a className="transition-colors hover:text-[#c95b63]" href="#story">Our story</a><a className="transition-colors hover:text-[#c95b63]" href="/faq">FAQs</a><a className="transition-colors hover:text-[#c95b63]" href="/track-order">Track Order</a><a className="transition-colors hover:text-[#c95b63]" href="/profile">Profile</a>
+            <a className="font-serif text-[15px] font-medium normal-case tracking-normal transition-colors hover:text-[#b76559]" href="#shop">Shop</a>
+            <a className="font-serif text-[15px] font-medium normal-case tracking-normal transition-colors hover:text-[#b76559]" href="#categories">Categories <ChevronDown size={13} className="ml-1 inline" /></a>
+            <a className="font-serif text-[15px] font-medium normal-case tracking-normal transition-colors hover:text-[#b76559]" href="/track-order">Track Order</a><a className="font-serif text-[15px] font-medium normal-case tracking-normal transition-colors hover:text-[#b76559]" href="/profile">Profile</a>
           </nav>
 
           <div className="flex items-center gap-2">
             <button onClick={() => setSearchOpen((open) => !open)} className="icon-button" aria-label="Search products"><Search size={19} strokeWidth={1.8} /></button><button onClick={() => toggleTheme?.()} className="icon-button" aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}>{theme === "dark" ? <Sun size={19} strokeWidth={1.8} /> : <Moon size={19} strokeWidth={1.8} />}</button>
-            <button onClick={() => setCartOpen(true)} className="relative flex h-10 items-center gap-2 rounded-full border border-[#d8c7b8] bg-[#fffdf8] px-3 text-[12px] font-bold text-[#231f20] transition-all hover:-translate-y-0.5 hover:border-[#c95b63]">
+            <button onClick={() => setCartOpen(true)} className="relative flex h-12 items-center gap-2 rounded-[.3rem] border border-[#b76559] bg-[#b76559] px-5 text-[13px] font-serif text-[#fffaf3] transition-all hover:-translate-y-0.5 hover:bg-[#9f584e]">
               <ShoppingBag size={18} strokeWidth={1.8} /> <span className="hidden sm:inline">My bag</span>
               {cartCount > 0 && <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#c95b63] px-1 text-[10px] text-white">{cartCount}</span>}
             </button>
@@ -198,32 +198,29 @@ export default function Home() {
         {searchOpen && <div className="border-t border-[#eadfd3] bg-[#fffdf8] px-4 py-3"><div className="container relative"><Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#9b8980]" size={18} /><input autoFocus value={searchTerm} onFocus={() => setSearchSuggestionsOpen(true)} onChange={(event) => { setSearchTerm(event.target.value); setSearchSuggestionsOpen(true); }} onKeyDown={(event) => { if (event.key === "Escape") setSearchSuggestionsOpen(false); if (event.key === "Enter" && searchSuggestions[0]) chooseSearchSuggestion(searchSuggestions[0]); }} placeholder="Search useful finds..." aria-label="Search products with suggestions" className="w-full rounded-full border border-[#d8c7b8] bg-[#fffaf3] py-3 pl-11 pr-4 text-sm outline-none ring-[#c95b63] transition focus:ring-2" />{searchSuggestionsOpen && <div className="absolute left-4 right-4 top-[calc(100%+8px)] z-30 overflow-hidden rounded-2xl border border-[#dfc9b8] bg-[#fffaf3] p-2 shadow-[0_18px_38px_rgba(74,47,35,.16)]">{catalogLoading ? <div className="px-3 py-4 text-sm text-[#796b62]">Loading live products...</div> : catalogError ? <div className="px-3 py-4 text-sm text-[#b4444d]">Live catalog unavailable. Showing saved product data.</div> : searchSuggestions.length ? <><p className="px-3 pb-2 pt-1 text-[10px] font-bold uppercase tracking-[.16em] text-[#9a796b]">{searchTerm.trim() ? "Matching finds" : "Live product catalogue"}</p>{searchSuggestions.map((product) => <button key={product.id} onClick={() => chooseSearchSuggestion(product)} className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left transition hover:bg-[#f5ede3]"><img src={product.image} alt="" className="h-10 w-10 rounded-lg object-cover" /><span className="min-w-0 flex-1"><span className="block truncate text-sm font-bold text-[#231f20]">{product.name}</span><span className="block text-[11px] text-[#9a796b]">{product.category} · {formatPrice(product.price)}</span></span><ArrowRight size={15} className="text-[#c95b63]" /></button>)}</> : <div className="px-3 py-4 text-sm text-[#796b62]">No products match this search.</div>}</div>}</div></div>}
         {menuOpen && <div className="border-t border-[#eadfd3] bg-[#fffdf8] px-4 py-4 lg:hidden"><div className="container grid gap-3 text-sm font-bold"><a href="#shop" onClick={() => setMenuOpen(false)}>Shop all</a><a href="#categories" onClick={() => setMenuOpen(false)}>Categories</a><a href="#how-it-works" onClick={() => setMenuOpen(false)}>How it works</a><a href="#story" onClick={() => setMenuOpen(false)}>Our story</a><a href="/faq" onClick={() => setMenuOpen(false)}>FAQs</a><a href="/contact" onClick={() => setMenuOpen(false)}>Contact</a></div></div>}
       </header>
+      <div aria-hidden="true" className="h-[84px]" />
 
       <main id="top" className="scroll-pt-24">
         <section className="relative isolate overflow-hidden border-b border-[#eadfd3]">
-          <div className="absolute inset-y-0 right-0 -z-10 hidden w-[54%] overflow-hidden lg:block"><img src={heroImage} alt="Curated everyday products on a warm table" className="h-full w-full object-cover object-center" /><div className="absolute inset-0 bg-gradient-to-r from-[#fffaf3] via-[#fffaf3]/40 to-transparent" /></div>
-          <div className="container grid min-h-[610px] items-center gap-10 py-16 lg:grid-cols-[0.92fr_1.08fr] lg:py-20">
+          <div className="absolute inset-y-0 right-0 -z-10 hidden w-[60%] overflow-hidden lg:block"><img src={heroImage} alt="Curated everyday products on a warm table" className="h-full w-full object-cover object-center" /></div><div className="absolute inset-y-0 left-0 -z-10 hidden w-[13%] overflow-hidden lg:block"><img src={heroLeftImage} alt="Decorative Mughal illustration" className="h-full w-full object-cover object-right" /></div>
+          <div className="container grid min-h-[330px] items-center gap-6 py-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-8 lg:py-0">
             <div className="relative max-w-[560px]">
-              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#d9b99f] bg-[#f9eadb] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#795647]"><Sparkles size={14} className="text-[#b98942]" /> A little better, every day</div>
-              <h1 className="max-w-[600px] font-serif text-[clamp(3.2rem,6vw,6.8rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-[#231f20]">Small finds.<br /><em className="font-normal text-[#c95b63]">Good feeling.</em></h1>
-              <p className="mt-8 max-w-[440px] text-[17px] leading-8 text-[#6b5e56]">A thoughtful edit of useful, giftable things for everyday living—picked for Pakistani homes and delivered from Karachi.</p>
-              <div className="mt-9 flex flex-wrap items-center gap-3"><a href="#shop" className="primary-button">Explore the edit <ArrowRight size={17} /></a><a href="#how-it-works" className="text-link">How ordering works <ChevronDown size={15} /></a></div>
-              <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-[#dfcfc1] pt-5 text-[12px] font-bold uppercase tracking-[0.12em] text-[#76655b]"><span className="inline-flex items-center gap-2"><ShieldCheck size={17} className="text-[#c95b63]" /> Honest prices</span><span className="inline-flex items-center gap-2"><Truck size={17} className="text-[#c95b63]" /> COD ready</span></div>
+              <h1 className="max-w-[600px] font-serif text-[clamp(3.2rem,4vw,5rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-[#231f20]">Small finds.<br /><em className="font-normal text-[#c95b63]">Good feeling.</em></h1>
+              <p className="mt-6 max-w-[440px] text-[15px] leading-6 text-[#6b5e56]">A thoughtful edit of useful, giftable things for everyday living—picked for Pakistani homes and delivered from Karachi.</p>
+              <div className="mt-6 flex flex-wrap items-center gap-3"><a href="#shop" className="primary-button">Explore the edit <ArrowRight size={17} /></a><a href="#how-it-works" className="text-link">How ordering works <ChevronDown size={15} /></a></div>
+              <div className="mt-7 flex flex-wrap gap-x-8 gap-y-3 border-t border-[#dfcfc1] pt-4 text-[12px] font-bold uppercase tracking-[0.12em] text-[#76655b]"><span className="inline-flex items-center gap-2"><ShieldCheck size={17} className="text-[#c95b63]" /> Honest prices</span><span className="inline-flex items-center gap-2"><Truck size={17} className="text-[#c95b63]" /> COD ready</span></div>
             </div>
             <div className="relative h-[350px] overflow-hidden rounded-[2rem] border border-[#dfc6b3] bg-[#f4dfd0] shadow-[18px_22px_60px_rgba(104,67,48,0.14)] lg:hidden"><img src={heroImage} alt="Curated everyday products on a warm table" className="h-full w-full object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-[#231f20]/40 to-transparent" /><span className="absolute bottom-5 left-5 rounded-full bg-[#fffaf3]/90 px-4 py-2 text-xs font-bold text-[#231f20]">A considered little collection</span></div>
-            <div className="hidden h-full min-h-[520px] lg:block" />
+            <div className="hidden h-full min-h-[330px] lg:block" />
           </div>
           <div className="absolute -bottom-20 left-[44%] -z-10 h-56 w-56 rounded-full border border-[#e6cdbb]" />
         </section>
 
-        <section id="categories" className="container py-20 lg:py-28">
-          <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><p className="eyebrow">Browse by mood</p><h2 className="section-title">A little something for every corner.</h2></div><p className="max-w-[300px] text-sm leading-6 text-[#796b62]">Curated, practical and easy to love. Start with the things that make daily life feel lighter.</p></div>
-          <div className="grid gap-4 md:grid-cols-4">
-            {categories.map((category, index) => <a href="#shop" key={category.name} onClick={() => setActiveCategory(category.name)} className={`category-card ${index === 0 ? "md:translate-y-6" : index === 3 ? "md:-translate-y-5" : ""}`}><img src={category.image} alt={category.name} /><div className="category-overlay" /><div className="absolute inset-x-5 bottom-5"><p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/75">{category.note}</p><h3 className="mt-1 font-serif text-2xl text-white">{category.name}</h3><span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-white">Explore <ArrowRight size={14} /></span></div></a>)}
-          </div>
+        <section id="categories" className="border-b border-[#dfcbbb] bg-[#fbf5ed] py-8 lg:py-10">
+          <div className="container"><div className="flex items-center justify-between gap-5"><div><p className="eyebrow">Browse by mood</p><h2 className="mt-1 font-serif text-2xl sm:text-3xl">Find your little something.</h2></div><a href="#shop" className="hidden items-center gap-2 text-sm font-serif text-[#947b6c] transition hover:text-[#b76559] sm:inline-flex">View all categories <ArrowRight size={15} /></a></div><div className="mt-7 grid grid-cols-2 divide-x divide-[#dfcbbb] overflow-hidden border-y border-[#dfcbbb] sm:grid-cols-4 lg:grid-cols-8">{[...categories, { name: "Gifting", note: "Made easy", image: packingImage }, { name: "Decor", note: "Light & lovely", image: kitchenImage }, { name: "Everyday", note: "Daily wear", image: productImages.bottle }, { name: "Deals", note: "Worth a look", image: productImages.lamp }].map((category) => <a href="#shop" key={category.name} onClick={() => setActiveCategory(categories.some((item) => item.name === category.name) ? category.name : "All finds")} className="group flex min-h-[112px] flex-col items-center justify-center gap-3 px-2 py-4 text-center transition hover:bg-[#f1ddd3]"><span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#d8c5b4] bg-[#fffaf3] font-serif text-2xl text-[#b76559] transition group-hover:border-[#b76559]">{category.name === "Kitchen" ? "⌁" : category.name === "Beauty & Care" ? "✿" : category.name === "Home Living" ? "⌂" : category.name === "Gadgets" ? "✦" : category.name === "Gifting" ? "□" : category.name === "Decor" ? "◌" : category.name === "Everyday" ? "◇" : "%"}</span><span><strong className="block font-serif text-[15px] font-medium text-[#2c1e1a]">{category.name}</strong><small className="mt-1 block text-[10px] uppercase tracking-[.08em] text-[#947b6c]">{category.note}</small></span></a>)}</div></div>
         </section>
 
-        <section id="shop" className="border-y border-[#eadfd3] bg-[#f5ede3] py-20 lg:py-28">
+        <section id="shop" className="border-y border-[#eadfd3] bg-[#f5ede3] py-10 lg:py-0">
           <div className="container">
             <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end"><div><p className="eyebrow">The current edit</p><h2 className="section-title">Useful things, chosen well.</h2></div><div className="flex w-full max-w-[520px] flex-col gap-3"><label className="relative block"><Search size={17} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#a58f83]" /><input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search products by name..." aria-label="Search products" className="w-full rounded-full border border-[#d9c5b5] bg-[#fffaf3] py-3 pl-11 pr-4 text-sm outline-none transition focus:border-[#c95b63] focus:ring-2 focus:ring-[#f0c4be]" /></label><div className="flex flex-wrap items-center justify-end gap-2"><button onClick={() => setActiveCategory("All finds")} className={activeCategory === "All finds" ? "filter-pill active" : "filter-pill"}>All finds</button>{["Kitchen", "Beauty & Care", "Home Living", "Gadgets"].map((category) => <button key={category} onClick={() => setActiveCategory(category)} className={activeCategory === category ? "filter-pill active" : "filter-pill"}>{category}</button>)}</div></div></div>
             {visibleProducts.length ? <div className="grid gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">{visibleProducts.map((product) => <article key={product.id} className="group"><div className="product-image"><img src={product.image} alt={product.name} /><span className="product-tag">{product.tag}</span><button onClick={() => toggleFavorite(product.id)} className={`absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-[#fffaf3]/90 transition hover:bg-[#c95b63] hover:text-white ${favorites.includes(product.id) ? "text-[#c95b63]" : "text-[#6b5e56]"}`} aria-label={`${favorites.includes(product.id) ? "Remove" : "Save"} ${product.name}`}><Heart size={16} fill={favorites.includes(product.id) ? "currentColor" : "none"} /></button><button onClick={() => void openQuickView(product)} className="absolute bottom-3 left-3 rounded-full bg-[#fffaf3]/95 px-3 py-2 text-[11px] font-bold text-[#6b5e56] shadow-sm transition hover:bg-[#c95b63] hover:text-white">Quick view</button><button disabled={addingId === product.id} onClick={() => void addToCart(product.id)} className="add-button">{addingId === product.id ? <><span className="loading-dot" /> Adding...</> : <>Add to bag <Plus size={16} /></>}</button></div><div className="mt-4 flex items-start justify-between gap-3"><div><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9a796b]">{product.category} <span className="mx-1 text-[#c95b63]">/</span> {product.id}</p><a href={`/product/${product.id}`} className="mt-1 block font-serif text-[21px] leading-tight text-[#231f20] transition hover:text-[#c95b63]">{product.name}</a></div><div className="shrink-0 text-right"><p className="font-bold text-[#231f20]">{formatPrice(product.price)}</p><p className="text-xs text-[#a58f83] line-through">{formatPrice(product.oldPrice)}</p></div></div></article>)}</div> : <div className="rounded-3xl border border-dashed border-[#d4beaa] bg-[#fffaf3] p-12 text-center"><p className="font-serif text-2xl">Nothing in this edit yet.</p><button onClick={() => { setSearchTerm(""); setActiveCategory("All finds"); }} className="mt-4 text-sm font-bold text-[#c95b63]">Reset the view</button></div>}

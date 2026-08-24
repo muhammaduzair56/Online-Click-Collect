@@ -14,13 +14,14 @@ import Login from "@/pages/Login";
 import Favorites from "@/pages/Favorites";
 import Signup from "@/pages/Signup";
 import TrackOrder from "@/pages/TrackOrder";
+import DesignTemplates from "@/pages/DesignTemplates";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 
 function Router() {
-  return <Switch><Route path="/" component={Home} /><Route path="/admin" component={Admin} /><Route path="/faq" component={FAQ} /><Route path="/contact" component={Contact} /><Route path="/product/:id" component={ProductDetail} /><Route path="/profile" component={Profile} /><Route path="/login" component={Login} /><Route path="/favorites" component={Favorites} /><Route path="/signup" component={Signup} /><Route path="/track-order" component={TrackOrder} /><Route path="/404" component={NotFound} /><Route component={NotFound} /></Switch>;
+  return <Switch><Route path="/" component={Home} /><Route path="/admin" component={Admin} /><Route path="/faq" component={FAQ} /><Route path="/contact" component={Contact} /><Route path="/product/:id" component={ProductDetail} /><Route path="/profile" component={Profile} /><Route path="/login" component={Login} /><Route path="/favorites" component={Favorites} /><Route path="/signup" component={Signup} /><Route path="/track-order" component={TrackOrder} /><Route path="/design-templates" component={DesignTemplates} /><Route path="/404" component={NotFound} /><Route component={NotFound} /></Switch>;
 }
 
 export default function App() {

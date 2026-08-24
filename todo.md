@@ -156,3 +156,47 @@
 - [x] Backend import, OpenAPI route registration, auth dependencies aur schema consistency test karni hai.
 - [x] Dead/incomplete routes, wrong methods, missing response fields aur frontend mismatches fix karne hain.
 - [x] Corrected backend ko verify karke GitHub main branch par push karna hai.
+
+## Fixed navbar correction
+
+- [x] Sticky header ko true fixed header mein convert karna hai.
+- [x] Announcement bar ko scroll par collapse/hide karna hai.
+- [x] Main content ke liye fixed-header spacer aur anchor offset add karna hai.
+- [x] Mobile menu/search/cart ko fixed navbar ke neeche correctly position karna hai.
+- [x] Actual scroll, mobile aur desktop previews verify karne hain.
+
+## Design template showcase
+
+- [x] Four clearly different Online Click & Collect design directions define karna.
+- [x] Friend ko compare karne ke liye template showcase route banana.
+- [x] Har template mein distinct colors, typography, hero composition, nav treatment aur product cards dikhana.
+- [x] Template selection interaction aur mobile responsive preview add karna.
+- [x] Showcase page verify karke checkpoint save karna.
+
+## Bazaar Editorial complete rebuild
+
+- [x] Attached Bazaar Editorial reference ko ground-truth visual spec ke taur par record karna.
+- [x] Current pages/components aur shared CSS system ka audit complete karna.
+- [x] Shared cream, terracotta, ink, serif typography, borders aur spacing system rebuild karna.
+- [x] Fixed announcement bar, editorial navbar aur reference-matched hero shell rebuild karna.
+- [x] Browse by mood category rail, product cards, trust strip aur footer ko reference direction mein rebuild karna.
+- [x] Product detail, cart/checkout, profile, favorites, auth, tracking, FAQ, contact aur admin pages ko same theme dena.
+- [x] Existing FastAPI/JWT/Neon/WhatsApp functionality ko preserve karke regression test karna.
+- [x] Desktop aur mobile screenshots, TypeScript, production build aur final checkpoint verify karna.
+
+## Exact screenshot copy revision
+
+- [x] User-provided screenshot ko homepage ka pixel-faithful ground truth record karna.
+- [x] Current homepage ke mismatches identify karke hero, navbar aur offer bar proportions correct karna.
+- [x] Screenshot jaisa 3-card horizontal product strip with image/details/actions rebuild karna.
+- [x] Screenshot jaisa eight-item Browse by mood rail aur four-item trust strip rebuild karna.
+- [x] Functional search, favorites, quick view, cart aur WhatsApp actions ko exact visual composition mein preserve karna.
+- [x] Mobile adaptation, desktop visual comparison, TypeScript/build aur final checkpoint verify karna.
+
+## Vercel deployment preparation
+
+- [x] Vercel build root, output directory aur framework configuration audit karna.
+- [x] SPA route rewrites aur deployment configuration add karna.
+- [x] Vercel environment variables aur FastAPI contract document karna.
+- [x] Production build aur direct deep-link routes verify karna.
+- [ ] Deployment-ready frontend ko GitHub main branch par push karke checkpoint save karna.

@@ -64,6 +64,22 @@ Use the existing brand name **Online Click & Collect** with a clean circular mar
 ## Brand application rule
 For every component, ask: **Does this feel like a thoughtful Pakistani shop with a point of view, or like a generic marketplace template?** If it feels generic, simplify the hierarchy, add an editorial label, or introduce more breathing room before adding decoration.
 
+## Ground-truth reference: attached Bazaar Editorial template
+
+The user-provided `occ-template-01-bazaar-editorial.webp` is now the authoritative visual reference for this complete rebuild. Fidelity to the reference overrides the earlier multi-direction brainstorm. The implementation should preserve the existing Online Click & Collect identity and commerce behavior while matching the reference’s composition, proportions, materials, and visual rhythm.
+
+The target movement is contemporary Pakistani editorial commerce: a refined bazaar catalogue translated into a calm digital storefront. Use a warm ivory paper field, terracotta announcement and CTA bands, deep espresso typography, delicate brass linework, and softly lit product/lifestyle photography.
+
+The target composition is a narrow terracotta announcement strip, followed by a light editorial navbar with logo at left, restrained serif/sans navigation in the center, search and account controls, and a terracotta bag button at right. The hero is a wide split composition: an irregular ivory text panel on the left and a warm product still life on the right. The headline is large, dark, serif, and stacked, with muted terracotta emphasis on the second line. Product categories use a horizontal “Browse by mood” rail with simple line icons, followed by compact editorial product cards and a four-item trust strip.
+
+Typography pairs DM Serif Display or Cormorant Garamond for headlines with Plus Jakarta Sans for navigation, metadata, prices, and controls. Avoid pill-heavy UI, excessive gradients, neon, purple, or generic SaaS card styling. Buttons should be compact rectangular or gently rounded rectangles. Borders are thin and warm; shadows are subtle and photographic.
+
+Signature palette: ivory `#fbf5ed`, terracotta `#b76559`, deep espresso `#2c1e1a`, pale sand `#eadbca`, muted sage `#7b8977`, and brass `#b78a55`. Motion is quiet, using opacity and 8–12px translate transitions while respecting reduced motion.
+
+## Full rebuild scope
+
+Homepage, product detail, cart/checkout, profile, favorites, auth, tracking, FAQ, contact, admin, and template showroom surfaces must share this visual system. Existing FastAPI, JWT, Neon, order, gallery, favorites, WhatsApp, and admin contracts remain intact. No reviews, ratings, or testimonials may be fabricated.
+
 ## Style Decisions
 
 - Product imagery should read as warm editorial still life or lived-in Pakistani home context; avoid stark catalogue cutouts and overly saturated tech imagery.
