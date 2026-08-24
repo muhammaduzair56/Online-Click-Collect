@@ -214,3 +214,10 @@
 - [x] Desktop navbar mein visible Login/Signup ya authenticated Profile/Logout controls add karna.
 - [x] Mobile menu mein same account actions add karna.
 - [x] Auth navigation, responsive layout, build aur checkpoint verify karna.
+
+## Protected checkout flow
+
+- [ ] Cart aur current WhatsApp checkout flow inspect karna.
+- [ ] Guest ko Add to Cart allow karke Buy/Checkout par Login/Signup requirement add karna.
+- [ ] Login/Signup ke baad checkout return path aur cart persistence implement karna.
+- [ ] Delivery details, WhatsApp order preparation, responsive UI aur build verify karna.

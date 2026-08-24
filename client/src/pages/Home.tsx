@@ -73,7 +73,7 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchSuggestionsOpen, setSearchSuggestionsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [cart, setCart] = useState<{ id: string; quantity: number }[]>([]);
+  const [cart, setCart] = useState<{ id: string; quantity: number }[]>(() => { try { return JSON.parse(localStorage.getItem("occ-cart") || "[]") as { id: string; quantity: number }[]; } catch { return []; } });
   const [cartOpen, setCartOpen] = useState(false);
   const [deliveryCity, setDeliveryCity] = useState("Karachi");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -94,7 +94,9 @@ export default function Home() {
   const [catalogLoading, setCatalogLoading] = useState(false);
   const [catalogError, setCatalogError] = useState("");
   useEffect(() => { localStorage.setItem("occ-favorites", JSON.stringify(favorites)); }, [favorites]);
+  useEffect(() => { localStorage.setItem("occ-cart", JSON.stringify(cart)); }, [cart]);
   useEffect(() => { const syncAuth = () => setIsAuthenticated(Boolean(auth.token)); window.addEventListener("storage", syncAuth); return () => window.removeEventListener("storage", syncAuth); }, []);
+  useEffect(() => { if (auth.token && new URLSearchParams(window.location.search).get("checkout") === "1") { setCartOpen(true); window.history.replaceState({}, "", window.location.pathname); } }, []);
   useEffect(() => { const onScroll = () => setIsScrolled(window.scrollY > 12); window.addEventListener("scroll", onScroll, { passive: true }); onScroll(); return () => window.removeEventListener("scroll", onScroll); }, []);
   useEffect(() => { if (fastApi.isConfigured) void fastApi.favorites.then((remote) => { if (remote.length) setFavorites(remote); }).catch(() => undefined); }, []);
   useEffect(() => { if (!fastApi.isConfigured) return; setCatalogLoading(true); setCatalogError(""); void fastApi.products.then((remote) => { const normalized = remote.map((item) => { const local = products.find((product) => product.id === item.id); return { ...local, ...item, oldPrice: local?.oldPrice ?? item.price, tag: local?.tag ?? "Live catalog", image: item.image_url || local?.image || productImages.organiser, color: local?.color ?? "cream" }; }); setCatalogProducts(normalized); }).catch((error) => { setCatalogError(error instanceof Error ? error.message : "Live catalog is unavailable"); setCatalogProducts(products); }).finally(() => setCatalogLoading(false)); }, []);
@@ -155,6 +157,7 @@ export default function Home() {
   };
 
   const startWhatsAppOrder = async () => {
+    if (!auth.token) { setCartOpen(false); toast.info("Please sign in before checkout", { description: "Your cart is saved. We will return you here after login." }); window.location.href = "/login?next=%2F%3Fcheckout%3D1"; return; }
     if (!cartItems.length) {
       toast("Your bag is waiting", { description: "Add a product first and we’ll prepare the order message." });
       return;
