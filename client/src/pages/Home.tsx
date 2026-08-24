@@ -11,6 +11,9 @@ import {
   Heart,
   MessageCircle,
   Menu,
+  LogIn,
+  LogOut,
+  UserPlus,
   Minus,
   Moon,
   Sun,
@@ -25,7 +28,7 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
-import { fastApi } from "@/lib/api";
+import { auth, fastApi } from "@/lib/api";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const heroImage = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/eNpEabmfOdEnGTeq.jpg";
@@ -74,6 +77,7 @@ export default function Home() {
   const [cartOpen, setCartOpen] = useState(false);
   const [deliveryCity, setDeliveryCity] = useState("Karachi");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => Boolean(auth.token));
   const [reviewFormOpen, setReviewFormOpen] = useState(false);
   const [reviewSent, setReviewSent] = useState(false);
   const [reviewRating, setReviewRating] = useState(5);
@@ -90,10 +94,12 @@ export default function Home() {
   const [catalogLoading, setCatalogLoading] = useState(false);
   const [catalogError, setCatalogError] = useState("");
   useEffect(() => { localStorage.setItem("occ-favorites", JSON.stringify(favorites)); }, [favorites]);
+  useEffect(() => { const syncAuth = () => setIsAuthenticated(Boolean(auth.token)); window.addEventListener("storage", syncAuth); return () => window.removeEventListener("storage", syncAuth); }, []);
   useEffect(() => { const onScroll = () => setIsScrolled(window.scrollY > 12); window.addEventListener("scroll", onScroll, { passive: true }); onScroll(); return () => window.removeEventListener("scroll", onScroll); }, []);
   useEffect(() => { if (fastApi.isConfigured) void fastApi.favorites.then((remote) => { if (remote.length) setFavorites(remote); }).catch(() => undefined); }, []);
   useEffect(() => { if (!fastApi.isConfigured) return; setCatalogLoading(true); setCatalogError(""); void fastApi.products.then((remote) => { const normalized = remote.map((item) => { const local = products.find((product) => product.id === item.id); return { ...local, ...item, oldPrice: local?.oldPrice ?? item.price, tag: local?.tag ?? "Live catalog", image: item.image_url || local?.image || productImages.organiser, color: local?.color ?? "cream" }; }); setCatalogProducts(normalized); }).catch((error) => { setCatalogError(error instanceof Error ? error.message : "Live catalog is unavailable"); setCatalogProducts(products); }).finally(() => setCatalogLoading(false)); }, []);
   useEffect(() => { if (!fastApi.isConfigured) return; setRecommendationLoading(true); void fastApi.getRecommendations().then((remote) => { setRecommended(remote.map((item) => ({ ...item, oldPrice: item.price, tag: "Picked for you", image: item.image_url || productImages.organiser, color: "cream" }))); }).catch(() => setRecommended([])).finally(() => setRecommendationLoading(false)); }, []);
+  const handleLogout = () => { fastApi.logout(); setIsAuthenticated(false); toast.success("You have been signed out"); };
   const toggleFavorite = (id: string) => { setFavorites((current) => { const next = current.includes(id) ? current.filter((item) => item !== id) : [...current, id]; if (fastApi.isConfigured) void fastApi.syncFavorites(next).catch(() => toast.error("Could not sync favorites")); return next; }); toast.success(favorites.includes(id) ? "Removed from favorites" : "Saved to favorites"); };
   const openQuickView = async (product: (typeof products)[number]) => { setQuickViewProduct(product); setQuickViewGallery([product.image]); setSelectedQuickImage(product.image); if (!fastApi.isConfigured) return; setQuickViewLoading(true); try { const gallery = await fastApi.getProductGallery(product.id); if (gallery.length) setQuickViewGallery([product.image, ...gallery.sort((a, b) => a.sort_order - b.sort_order).map((image) => image.url)]); } catch { /* The primary product image remains available when gallery API is not configured. */ } finally { setQuickViewLoading(false); } };
 
@@ -183,7 +189,7 @@ export default function Home() {
           <nav className="hidden items-center gap-7 text-[12px] font-bold uppercase tracking-[0.14em] text-[#5d514b] lg:flex">
             <a className="font-serif text-[15px] font-medium normal-case tracking-normal transition-colors hover:text-[#b76559]" href="#shop">Shop</a>
             <a className="font-serif text-[15px] font-medium normal-case tracking-normal transition-colors hover:text-[#b76559]" href="#categories">Categories <ChevronDown size={13} className="ml-1 inline" /></a>
-            <a className="font-serif text-[15px] font-medium normal-case tracking-normal transition-colors hover:text-[#b76559]" href="/track-order">Track Order</a><a className="font-serif text-[15px] font-medium normal-case tracking-normal transition-colors hover:text-[#b76559]" href="/profile">Profile</a>
+            <a className="font-serif text-[15px] font-medium normal-case tracking-normal transition-colors hover:text-[#b76559]" href="/track-order">Track Order</a>{isAuthenticated ? <><a className="font-serif text-[15px] font-medium normal-case tracking-normal transition-colors hover:text-[#b76559]" href="/profile">Profile</a><button onClick={handleLogout} className="inline-flex items-center gap-1.5 font-serif text-[15px] font-medium normal-case tracking-normal text-[#b76559] transition-colors hover:text-[#8f4e46]" title="Log out"><LogOut size={15} /> Logout</button></> : <><a className="inline-flex items-center gap-1.5 font-serif text-[15px] font-medium normal-case tracking-normal text-[#b76559] transition-colors hover:text-[#8f4e46]" href="/login"><LogIn size={15} /> Login</a><a className="inline-flex items-center gap-1.5 rounded-[.25rem] border border-[#b76559] px-3 py-2 font-serif text-[15px] font-medium normal-case tracking-normal text-[#b76559] transition-colors hover:bg-[#b76559] hover:text-[#fffaf3]" href="/signup"><UserPlus size={15} /> Sign up</a></>}
           </nav>
 
           <div className="flex items-center gap-2">
@@ -196,7 +202,7 @@ export default function Home() {
           </div>
         </div>
         {searchOpen && <div className="border-t border-[#eadfd3] bg-[#fffdf8] px-4 py-3"><div className="container relative"><Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#9b8980]" size={18} /><input autoFocus value={searchTerm} onFocus={() => setSearchSuggestionsOpen(true)} onChange={(event) => { setSearchTerm(event.target.value); setSearchSuggestionsOpen(true); }} onKeyDown={(event) => { if (event.key === "Escape") setSearchSuggestionsOpen(false); if (event.key === "Enter" && searchSuggestions[0]) chooseSearchSuggestion(searchSuggestions[0]); }} placeholder="Search useful finds..." aria-label="Search products with suggestions" className="w-full rounded-full border border-[#d8c7b8] bg-[#fffaf3] py-3 pl-11 pr-4 text-sm outline-none ring-[#c95b63] transition focus:ring-2" />{searchSuggestionsOpen && <div className="absolute left-4 right-4 top-[calc(100%+8px)] z-30 overflow-hidden rounded-2xl border border-[#dfc9b8] bg-[#fffaf3] p-2 shadow-[0_18px_38px_rgba(74,47,35,.16)]">{catalogLoading ? <div className="px-3 py-4 text-sm text-[#796b62]">Loading live products...</div> : catalogError ? <div className="px-3 py-4 text-sm text-[#b4444d]">Live catalog unavailable. Showing saved product data.</div> : searchSuggestions.length ? <><p className="px-3 pb-2 pt-1 text-[10px] font-bold uppercase tracking-[.16em] text-[#9a796b]">{searchTerm.trim() ? "Matching finds" : "Live product catalogue"}</p>{searchSuggestions.map((product) => <button key={product.id} onClick={() => chooseSearchSuggestion(product)} className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left transition hover:bg-[#f5ede3]"><img src={product.image} alt="" className="h-10 w-10 rounded-lg object-cover" /><span className="min-w-0 flex-1"><span className="block truncate text-sm font-bold text-[#231f20]">{product.name}</span><span className="block text-[11px] text-[#9a796b]">{product.category} · {formatPrice(product.price)}</span></span><ArrowRight size={15} className="text-[#c95b63]" /></button>)}</> : <div className="px-3 py-4 text-sm text-[#796b62]">No products match this search.</div>}</div>}</div></div>}
-        {menuOpen && <div className="border-t border-[#eadfd3] bg-[#fffdf8] px-4 py-4 lg:hidden"><div className="container grid gap-3 text-sm font-bold"><a href="#shop" onClick={() => setMenuOpen(false)}>Shop all</a><a href="#categories" onClick={() => setMenuOpen(false)}>Categories</a><a href="#how-it-works" onClick={() => setMenuOpen(false)}>How it works</a><a href="#story" onClick={() => setMenuOpen(false)}>Our story</a><a href="/faq" onClick={() => setMenuOpen(false)}>FAQs</a><a href="/contact" onClick={() => setMenuOpen(false)}>Contact</a></div></div>}
+        {menuOpen && <div className="border-t border-[#eadfd3] bg-[#fffdf8] px-4 py-4 lg:hidden"><div className="container grid gap-3 text-sm font-bold"><a href="#shop" onClick={() => setMenuOpen(false)}>Shop all</a><a href="#categories" onClick={() => setMenuOpen(false)}>Categories</a><a href="#how-it-works" onClick={() => setMenuOpen(false)}>How it works</a><a href="#story" onClick={() => setMenuOpen(false)}>Our story</a><a href="/track-order" onClick={() => setMenuOpen(false)}>Track order</a><a href={isAuthenticated ? "/profile" : "/login"} onClick={() => setMenuOpen(false)}>{isAuthenticated ? "Profile" : "Login"}</a>{!isAuthenticated && <a href="/signup" onClick={() => setMenuOpen(false)}>Create account</a>}{isAuthenticated && <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="text-left text-[#b76559]">Logout</button>}<a href="/faq" onClick={() => setMenuOpen(false)}>FAQs</a><a href="/contact" onClick={() => setMenuOpen(false)}>Contact</a></div></div>}
       </header>
       <div aria-hidden="true" className="h-[84px]" />
 

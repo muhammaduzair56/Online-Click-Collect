@@ -203,7 +203,14 @@
 
 ## Vercel image loading fix
 
-- [ ] Deployed Vercel page par broken image requests identify karna.
-- [ ] `/manus-storage` production-only references ko deployable public asset URLs se replace karna.
-- [ ] Hero, logo, product, category aur supporting images ke load states verify karna.
+- [x] Deployed Vercel page par broken image requests identify karna.
+- [x] `/manus-storage` production-only references ko deployable public asset URLs se replace karna.
+- [x] Hero, logo, product, category aur supporting images ke load states verify karna.
 - [ ] Production build, public URL aur GitHub update complete karna.
+
+## Navbar account actions
+
+- [x] Existing navbar auth state aur token handling inspect karna.
+- [x] Desktop navbar mein visible Login/Signup ya authenticated Profile/Logout controls add karna.
+- [x] Mobile menu mein same account actions add karna.
+- [x] Auth navigation, responsive layout, build aur checkpoint verify karna.
