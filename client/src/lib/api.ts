@@ -3,7 +3,7 @@
   The Vercel frontend talks to a separate FastAPI service through VITE_FASTAPI_URL.
 */
 
-export type Product = { id: string; name: string; category: string; price: number; stock: number; image_url?: string; is_active: boolean };
+export type Product = { id: string; name: string; category: string; price: number; old_price?: number; stock: number; image_url?: string; is_active: boolean; description?: string };
 export type Order = { id: string; customer_name: string; phone: string; total: number; status: string; created_at: string };
 export type Review = { order_number: string; rating: number; text: string };
 export type Address = { id: string; label: string; recipient_name: string; phone: string; city: string; address_line: string; landmark?: string; is_default: boolean };
@@ -47,7 +47,7 @@ export const fastApi = {
   getProduct: (id: string) => request<Product>(`/api/products/${id}`),
   get favorites() { return request<string[]>("/api/me/favorites"); },
   syncFavorites: (productIds: string[]) => request<{ ok: boolean }>("/api/me/favorites", { method: "PUT", body: JSON.stringify({ product_ids: productIds }) }),
-  createProduct: (payload: Omit<Product, "id" | "is_active">) => request<Product>("/api/products", { method: "POST", body: JSON.stringify(payload) }),
+  createProduct: (payload: Omit<Product, "id" | "is_active" | "old_price">) => request<Product>("/api/products", { method: "POST", body: JSON.stringify(payload) }),
   updateProduct: (id: string, payload: Partial<Product>) => request<Product>(`/api/products/${id}`, { method: "PATCH", body: JSON.stringify(payload) }),
   getProductGallery: (id: string) => request<GalleryImage[]>(`/api/products/${id}/gallery`),
   uploadProductImage: async (id: string, file: File) => { if (!API_BASE) throw new Error("FastAPI is not connected yet."); const body = new FormData(); body.append("file", file); const response = await fetch(`${API_BASE}/api/products/${id}/gallery`, { method: "POST", body, headers: auth.token ? { Authorization: `Bearer ${auth.token}` } : {}, credentials: "include" }); if (!response.ok) throw new Error((await response.text()) || "Image upload failed"); return response.json() as Promise<GalleryImage>; },

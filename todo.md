@@ -234,3 +234,11 @@
 - [x] Document head aur brand mark asset audit karna.
 - [x] Brand mark favicon aur theme metadata add karna.
 - [x] Build, favicon URL aur deployment readiness verify karke push/checkpoint save karna.
+
+## Admin product manager
+
+- [x] Existing Admin UI aur FastAPI product create/update contracts audit karna.
+- [x] Add Product aur Edit Product reusable form banana.
+- [x] Product fields, validation, active status, loading/error/success states connect karna.
+- [x] Product list, edit actions aur existing gallery manager ko preserve karke verify karna.
+- [x] Responsive admin UI, TypeScript/build, GitHub push aur checkpoint verify karna.
