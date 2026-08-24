@@ -257,3 +257,10 @@
 - [x] Multiple file selection, image type/size validation aur upload queue add karna.
 - [x] Progress, success/failure counts aur partial failure feedback add karna.
 - [x] Gallery refresh, responsive UI, build, GitHub push aur checkpoint verify karna.
+
+## Gallery delete confirmation
+
+- [x] Existing gallery delete handler aur dialog component audit karna.
+- [x] Confirmation popup mein image context, Cancel aur Delete actions add karna.
+- [x] Explicit confirmation ke baad hi FastAPI delete request run karna.
+- [x] Cancel/delete behavior, responsive UI, build, GitHub push aur checkpoint verify karna.
