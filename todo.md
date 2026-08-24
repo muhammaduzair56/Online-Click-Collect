@@ -149,3 +149,10 @@
 - [x] Loading, API error, empty catalog aur local fallback states handle karni hain.
 - [x] Suggestion selection ko live product data, filtering aur shop scroll ke saath connect karna hai.
 - [x] TypeScript, production build aur responsive preview verify karna hai.
+
+## FastAPI endpoint audit
+
+- [x] GitHub backend ke actual routes aur frontend api.ts contracts compare karne hain.
+- [x] Backend import, OpenAPI route registration, auth dependencies aur schema consistency test karni hai.
+- [x] Dead/incomplete routes, wrong methods, missing response fields aur frontend mismatches fix karne hain.
+- [x] Corrected backend ko verify karke GitHub main branch par push karna hai.

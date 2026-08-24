@@ -299,9 +299,15 @@ def signup(payload: AuthPayload, db: Session = Depends(get_db)) -> dict:
 
 @app.post("/api/auth/login")
 def login(payload: AuthPayload, db: Session = Depends(get_db)) -> dict:
-    user = db.scalar(select(User).where(User.email == payload.email.strip().lower()))
+    email = payload.email.strip().lower()
+    user = db.scalar(select(User).where(User.email == email))
     if user is None or not verify_password(payload.password, user.password_hash):
         raise HTTPException(status_code=401, detail="Invalid email or password")
+    admin_emails = {x.strip().lower() for x in settings.admin_emails.split(",") if x.strip()}
+    if email in admin_emails and not user.is_admin:
+        user.is_admin = True
+        db.commit()
+        db.refresh(user)
     return {"access_token": token_for(user), "token_type": "bearer", "user": {"id": user.id, "name": user.name, "email": user.email, "is_admin": user.is_admin}}
 
 
@@ -386,7 +392,9 @@ def sync_favorites(payload: FavoritePayload, user: User = Depends(current_user),
     current = db.scalars(select(Favorite).where(Favorite.user_id == user.id)).all()
     for item in current: db.delete(item)
     for product_id in dict.fromkeys(payload.product_ids):
-        if db.get(Product, product_id): db.add(Favorite(user_id=user.id, product_id=product_id))
+        product_item = db.get(Product, product_id)
+        if product_item and product_item.is_active:
+            db.add(Favorite(user_id=user.id, product_id=product_id))
     db.commit(); return {"ok": True}
 
 
@@ -467,7 +475,7 @@ def my_orders(user: User = Depends(current_user), db: Session = Depends(get_db))
 def tracking(order_id: str, db: Session = Depends(get_db)) -> dict:
     order = db.get(Order, order_id)
     if order is None: raise HTTPException(status_code=404, detail="Order not found")
-    return order_out(order)
+    return {"id": order.id, "total": float(order.total), "status": order.status, "created_at": order.created_at.isoformat()}
 
 
 @app.patch("/api/orders/{order_id}/status")
@@ -476,7 +484,13 @@ def update_status(order_id: str, payload: StatusPayload, _: User = Depends(admin
     if payload.status not in allowed: raise HTTPException(status_code=400, detail="Invalid order status")
     order = db.get(Order, order_id)
     if order is None: raise HTTPException(status_code=404, detail="Order not found")
-    order.status = payload.status; db.commit(); db.refresh(order); return order_out(order)
+    if payload.status == "Cancelled" and order.status != "Cancelled":
+        for line in db.scalars(select(OrderItem).where(OrderItem.order_id == order.id)).all():
+            product_item = db.get(Product, line.product_id)
+            if product_item: product_item.stock += line.quantity
+        order.cancelled_at = datetime.now(timezone.utc)
+    order.status = payload.status
+    db.commit(); db.refresh(order); return order_out(order)
 
 
 @app.post("/api/me/orders/{order_id}/cancel")
@@ -484,6 +498,9 @@ def cancel_order(order_id: str, body: CancelPayload | None = None, user: User = 
     order = db.scalar(select(Order).where(Order.id == order_id, Order.user_id == user.id))
     if order is None: raise HTTPException(status_code=404, detail="Order not found")
     if order.status.lower() != "pending": raise HTTPException(status_code=409, detail="Only pending orders can be cancelled")
+    for line in db.scalars(select(OrderItem).where(OrderItem.order_id == order.id)).all():
+        product_item = db.get(Product, line.product_id)
+        if product_item: product_item.stock += line.quantity
     order.status = "Cancelled"; order.cancelled_at = datetime.now(timezone.utc); order.cancellation_reason = body.reason.strip() if body and body.reason else None
     db.commit(); db.refresh(order); return order_out(order)
 
