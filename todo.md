@@ -110,3 +110,13 @@
 - [x] Quick View mein image, price, product details, favorites aur add-to-bag action dikhana hai.
 - [x] Profile mein sirf Pending orders ke liye cancel confirmation aur loading/error/success states add karni hain.
 - [x] Responsive modal/profile flows, TypeScript aur production build verify karna hai.
+
+## Quick View gallery, FastAPI cancellation, and owner-contact revision
+
+- [x] Quick View ke liye gallery metadata aur frontend image thumbnails contract add karna hai.
+- [x] Product stock status ko in-stock, low-stock, out-of-stock states mein show karna hai.
+- [x] FastAPI backend directory, Neon DATABASE_URL, JWT_SECRET aur migration/schema documentation add karni hai.
+- [x] Protected POST /api/me/orders/{order_id}/cancel endpoint pending-owner order check ke saath implement karna hai.
+- [x] Cancelled order ke baad direct owner WhatsApp CTA show karna hai.
+- [x] Navbar ko desktop/mobile par sticky, visible aur non-overlapping verify karna hai.
+- [x] Frontend/backend tests, build aur GitHub push verify karna hai.
