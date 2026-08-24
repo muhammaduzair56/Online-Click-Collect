@@ -250,3 +250,10 @@
 - [x] Create ke baad upload karke returned gallery URL ko main image set karna.
 - [x] Edit flow mein uploaded image se main image replace karna aur old gallery behavior preserve karna.
 - [x] Upload progress/error states, build, responsive UI, GitHub push aur checkpoint verify karna.
+
+## Bulk gallery image upload
+
+- [x] Existing gallery picker aur upload API contract audit karna.
+- [x] Multiple file selection, image type/size validation aur upload queue add karna.
+- [x] Progress, success/failure counts aur partial failure feedback add karna.
+- [x] Gallery refresh, responsive UI, build, GitHub push aur checkpoint verify karna.
