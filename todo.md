@@ -133,3 +133,11 @@
 - [x] Frontend API paths ko completed backend contracts ke saath align karna hai.
 - [x] Navbar sticky/fixed behavior desktop aur mobile par verify karke final polish karni hai.
 - [x] Frontend build, backend syntax/tests aur GitHub push verify karna hai.
+
+## WhatsApp share and navbar search revision
+
+- [x] Quick View modal mein product-specific WhatsApp share message aur public product link add karna hai.
+- [x] Sticky navbar mein responsive search input add karna hai.
+- [x] Search input ke neeche product-name/category suggestions aur keyboard-friendly selection add karni hai.
+- [x] Suggestion select karne par shop results filter/scroll karne hain.
+- [x] Mobile/desktop preview, TypeScript aur production build verify karna hai.
