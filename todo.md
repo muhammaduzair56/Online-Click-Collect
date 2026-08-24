@@ -217,7 +217,14 @@
 
 ## Protected checkout flow
 
-- [ ] Cart aur current WhatsApp checkout flow inspect karna.
-- [ ] Guest ko Add to Cart allow karke Buy/Checkout par Login/Signup requirement add karna.
-- [ ] Login/Signup ke baad checkout return path aur cart persistence implement karna.
-- [ ] Delivery details, WhatsApp order preparation, responsive UI aur build verify karna.
+- [x] Cart aur current WhatsApp checkout flow inspect karna.
+- [x] Guest ko Add to Cart allow karke Buy/Checkout par Login/Signup requirement add karna.
+- [x] Login/Signup ke baad checkout return path aur cart persistence implement karna.
+- [x] Delivery details, WhatsApp order preparation, responsive UI aur build verify karna.
+
+## Auth feedback and profile history
+
+- [x] Existing Login/Signup spinner aur disabled submit state audit karna.
+- [x] Login/Signup loading, error aur success feedback ko robust banana.
+- [x] Logged-in Profile mein FastAPI order history loading, empty, error aur populated states verify/add karna.
+- [x] Responsive UI, TypeScript/build aur authenticated flow push/checkpoint verify karna.
