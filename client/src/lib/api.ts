@@ -60,6 +60,7 @@ export const fastApi = {
   saveAddress: (payload: Omit<Address, "id">) => request<Address>("/api/me/addresses", { method: "POST", body: JSON.stringify(payload) }),
   deleteAddress: (id: string) => request<{ ok: boolean }>(`/api/me/addresses/${id}`, { method: "DELETE" }),
   updateOrder: (id: string, status: string) => request<Order>(`/api/orders/${id}/status`, { method: "PATCH", body: JSON.stringify({ status }) }),
+  cancelOrder: (id: string) => request<Order>(`/api/me/orders/${encodeURIComponent(id)}/cancel`, { method: "POST" }),
   getRecommendations: () => request<Product[]>("/api/me/recommendations"),
   submitReview: (payload: Review) => request<{ ok: boolean }>("/api/reviews", { method: "POST", body: JSON.stringify(payload) }),
 };

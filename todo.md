@@ -102,3 +102,11 @@
 - [x] Checkout city dropdown aur city-specific delivery rates define karni hain.
 - [x] Subtotal, city delivery charge aur grand total WhatsApp message mein preserve karna hai.
 - [x] TypeScript, production build, responsive previews aur GitHub repository push verify karna hai.
+
+## Quick View and order cancellation revision
+
+- [x] FastAPI cancel-order endpoint contract add karna hai.
+- [x] Homepage product cards par Quick View action aur accessible modal add karna hai.
+- [x] Quick View mein image, price, product details, favorites aur add-to-bag action dikhana hai.
+- [x] Profile mein sirf Pending orders ke liye cancel confirmation aur loading/error/success states add karni hain.
+- [x] Responsive modal/profile flows, TypeScript aur production build verify karna hai.
