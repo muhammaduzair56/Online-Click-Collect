@@ -316,3 +316,10 @@
 - [x] WhatsApp/theme controls ka safe non-overlapping placement ensure karna.
 - [x] 360px, 390px aur 430px full-page mobile screenshots aur desktop regression verify karna.
 - [x] Build, GitHub push aur responsive checkpoint save karna.
+
+## Hamburger scroll alignment correction
+
+- [x] Announcement-visible aur scrolled header states ka offset mismatch document karna.
+- [x] Hamburger ko header scroll state ke saath align karna.
+- [x] Top/scrolled mobile states ko 360px, 390px aur 430px par verify karna.
+- [x] Build, GitHub push aur corrected checkpoint save karna.
