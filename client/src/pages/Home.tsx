@@ -15,8 +15,6 @@ import {
   LogOut,
   UserPlus,
   Minus,
-  Moon,
-  Sun,
   PackageCheck,
   Plus,
   Search,
@@ -29,7 +27,6 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { auth, fastApi } from "@/lib/api";
-import { useTheme } from "@/contexts/ThemeContext";
 
 const heroImage = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/eNpEabmfOdEnGTeq.jpg";
 const heroLeftImage = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/eEPuschtzmcFwIin.jpg";
@@ -67,7 +64,6 @@ const formatPrice = (value: number) => `Rs. ${value.toLocaleString("en-PK")}`;
 const deliveryRates: Record<string, { label: string; charge: number }> = { Karachi: { label: "Karachi", charge: 150 }, Lahore: { label: "Lahore", charge: 250 }, Islamabad: { label: "Islamabad", charge: 250 }, Rawalpindi: { label: "Rawalpindi", charge: 250 }, Faisalabad: { label: "Faisalabad", charge: 250 }, Multan: { label: "Multan", charge: 250 }, Peshawar: { label: "Peshawar", charge: 300 }, Quetta: { label: "Quetta", charge: 300 }, Other: { label: "Other city", charge: 300 } };
 
 export default function Home() {
-  const { theme, toggleTheme } = useTheme();
   const [activeCategory, setActiveCategory] = useState("All finds");
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -196,7 +192,7 @@ export default function Home() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <button onClick={() => setSearchOpen((open) => !open)} className="icon-button" aria-label="Search products"><Search size={19} strokeWidth={1.8} /></button><button onClick={() => toggleTheme?.()} className="icon-button" aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}>{theme === "dark" ? <Sun size={19} strokeWidth={1.8} /> : <Moon size={19} strokeWidth={1.8} />}</button>
+            <button onClick={() => setSearchOpen((open) => !open)} className="icon-button" aria-label="Search products"><Search size={19} strokeWidth={1.8} /></button>
             <button onClick={() => setCartOpen(true)} className="relative flex h-12 items-center gap-2 rounded-[.3rem] border border-[#b76559] bg-[#b76559] px-5 text-[13px] font-serif text-[#fffaf3] transition-all hover:-translate-y-0.5 hover:bg-[#9f584e]">
               <ShoppingBag size={18} strokeWidth={1.8} /> <span className="hidden sm:inline">My bag</span>
               {cartCount > 0 && <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#c95b63] px-1 text-[10px] text-white">{cartCount}</span>}

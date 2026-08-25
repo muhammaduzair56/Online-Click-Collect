@@ -294,3 +294,10 @@
 - [x] Native device share button aur product-aware share payload add karna.
 - [x] Unsupported browser fallback, cancel handling aur error/success feedback add karna.
 - [x] Mobile/desktop UI, build, GitHub push aur checkpoint verify karna.
+
+## Universal mobile theme toggle
+
+- [x] ThemeContext aur public page navigation shells audit karna.
+- [x] Reusable mobile-accessible dark/light toggle aur shared placement add karna.
+- [x] Theme persistence, mobile menu behavior aur public page coverage verify karna.
+- [x] Build, GitHub push aur checkpoint verify karna.
