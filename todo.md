@@ -331,3 +331,11 @@
 - [x] Secondary pages par shared menu preserve karke duplicate controls remove karna.
 - [x] Top, scrolled, open states aur multi-width responsive build verify karna.
 - [x] GitHub push aur corrected checkpoint save karna.
+
+## Mobile announcement and product header correction
+
+- [x] Announcement text ko mobile width par complete aur readable banana.
+- [x] Product Detail ke Back, brand, WhatsApp aur menu actions ko clean mobile layout mein align karna.
+- [x] Product page par duplicate/overlapping hamburger remove karna.
+- [x] 360px, 390px aur 430px par top/menu-open/full-page responsive verification karna.
+- [x] Desktop regression, build, GitHub push aur checkpoint verify karna.

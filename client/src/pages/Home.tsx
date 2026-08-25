@@ -170,7 +170,7 @@ export default function Home() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#fffaf3] text-[#231f20] selection:bg-[#f3c5be] selection:text-[#231f20]">
       <div className="h-9 overflow-hidden whitespace-nowrap bg-[#231f20] px-4 py-2 text-center text-[10px] font-bold uppercase tracking-[0.16em] text-[#fffaf3] sm:text-[11px] sm:tracking-[0.24em]">
-        Free delivery on orders above Rs. 2,500 in Karachi <span className="mx-2 text-[#e6af62]">•</span> Cash on delivery <span className="mx-2 text-[#e6af62]">•</span> Easy returns
+        <span className="sm:hidden">Free delivery over Rs. 2,500 in Karachi</span><span className="hidden sm:inline">Free delivery on orders above Rs. 2,500 in Karachi <span className="mx-2 text-[#e6af62]">•</span> Cash on delivery <span className="mx-2 text-[#e6af62]">•</span> Easy returns</span>
       </div>
 
       <header className={`fixed inset-x-0 z-[60] border-b border-[#eadfd3] backdrop-blur-xl transition-[top,background-color,box-shadow] duration-200 ${isScrolled ? "top-0 bg-[#fffaf3]/98 shadow-[0_10px_30px_rgba(74,47,35,.14)]" : "top-[36px] bg-[#fffaf3]/95 shadow-[0_8px_24px_rgba(74,47,35,.06)]"}`} style={{ WebkitBackdropFilter: "blur(18px)" }}>

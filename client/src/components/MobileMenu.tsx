@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import { LogIn, LogOut, Menu, ShoppingBag, UserPlus, X } from "lucide-react";
 import { auth } from "@/lib/api";
 
-type MobileMenuProps = { embedded?: boolean; hideOnHome?: boolean };
+type MobileMenuProps = { embedded?: boolean; hideOnHome?: boolean; hideOnProduct?: boolean };
 
-export default function MobileMenu({ embedded = false, hideOnHome = false }: MobileMenuProps) {
+export default function MobileMenu({ embedded = false, hideOnHome = false, hideOnProduct = false }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
   const [authenticated, setAuthenticated] = useState(() => Boolean(auth.token));
   const [homeScrolled, setHomeScrolled] = useState(false);
@@ -29,7 +29,7 @@ export default function MobileMenu({ embedded = false, hideOnHome = false }: Mob
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  if (hideOnHome && window.location.pathname === "/") return null;
+  if ((hideOnHome && window.location.pathname === "/") || (hideOnProduct && window.location.pathname.startsWith("/product/"))) return null;
   const close = () => setOpen(false);
   const logout = () => { auth.clear(); setAuthenticated(false); close(); window.location.assign("/"); };
   const triggerPosition = embedded ? "relative" : `fixed right-4 ${homeScrolled ? "top-3" : "top-[4.45rem]"}`;

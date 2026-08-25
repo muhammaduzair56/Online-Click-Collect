@@ -27,5 +27,5 @@ function Router() {
 }
 
 export default function App() {
-  return <ErrorBoundary><ThemeProvider defaultTheme="light" switchable><TooltipProvider><Toaster /><Router /><ThemeToggle /><MobileMenu hideOnHome /></TooltipProvider></ThemeProvider></ErrorBoundary>;
+  return <ErrorBoundary><ThemeProvider defaultTheme="light" switchable><TooltipProvider><Toaster /><Router /><ThemeToggle /><MobileMenu hideOnHome hideOnProduct /></TooltipProvider></ThemeProvider></ErrorBoundary>;
 }
