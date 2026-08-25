@@ -308,3 +308,11 @@
 - [x] Reusable compact mobile header aur hamburger navigation component banana.
 - [x] Public routes mein menu integrate karke desktop navigation preserve karna.
 - [x] Menu open/close, accessibility, responsive layout, build, GitHub push aur checkpoint verify karna.
+
+## Mobile responsive correction
+
+- [x] User ke dono mobile screenshots ke against current render audit karna.
+- [x] Compact fixed header, hamburger placement, hero sizing aur horizontal overflow adjust karna.
+- [x] WhatsApp/theme controls ka safe non-overlapping placement ensure karna.
+- [x] 360px, 390px aur 430px full-page mobile screenshots aur desktop regression verify karna.
+- [x] Build, GitHub push aur responsive checkpoint save karna.

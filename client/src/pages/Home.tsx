@@ -174,13 +174,13 @@ export default function Home() {
 
       <header className={`fixed inset-x-0 z-[60] border-b border-[#eadfd3] backdrop-blur-xl transition-[top,background-color,box-shadow] duration-200 ${isScrolled ? "top-0 bg-[#fffaf3]/98 shadow-[0_10px_30px_rgba(74,47,35,.14)]" : "top-[36px] bg-[#fffaf3]/95 shadow-[0_8px_24px_rgba(74,47,35,.06)]"}`} style={{ WebkitBackdropFilter: "blur(18px)" }}>
         <div className="container flex h-[84px] items-center justify-between gap-6">
-          <a href="#top" className="flex shrink-0 items-center gap-3" aria-label="Online Click & Collect home">
+          <a href="#top" className="flex min-w-0 shrink items-center gap-3" aria-label="Online Click & Collect home">
             <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-[#dbb1a4] bg-[#f7dfd8] p-1 shadow-[0_7px_20px_rgba(35,31,32,0.08)]">
               <img src={markImage} alt="" className="h-full w-full object-contain" />
             </div>
-            <div className="leading-none">
-              <p className="font-serif text-[22px] font-semibold tracking-[-0.045em] text-[#2c1e1a]">Online Click & Collect</p>
-              <p className="mt-1 text-[10px] font-serif uppercase tracking-[0.2em] text-[#947b6c]">— Your bazaar, one click away —</p>
+            <div className="min-w-0 leading-none">
+              <p className="truncate font-serif text-[17px] font-semibold tracking-[-0.045em] text-[#2c1e1a] sm:text-[22px]">Online Click & Collect</p>
+              <p className="mt-1 truncate text-[8px] font-serif uppercase tracking-[0.16em] text-[#947b6c] sm:text-[10px] sm:tracking-[0.2em]">— Your bazaar, one click away —</p>
             </div>
           </a>
 
@@ -191,8 +191,8 @@ export default function Home() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <button onClick={() => setSearchOpen((open) => !open)} className="icon-button" aria-label="Search products"><Search size={19} strokeWidth={1.8} /></button>
-            <button onClick={() => setCartOpen(true)} className="relative flex h-12 items-center gap-2 rounded-[.3rem] border border-[#b76559] bg-[#b76559] px-5 text-[13px] font-serif text-[#fffaf3] transition-all hover:-translate-y-0.5 hover:bg-[#9f584e]">
+            <button onClick={() => setSearchOpen((open) => !open)} className="icon-button hidden sm:flex" aria-label="Search products"><Search size={19} strokeWidth={1.8} /></button>
+            <button onClick={() => setCartOpen(true)} className="relative hidden h-12 items-center gap-2 rounded-[.3rem] border border-[#b76559] bg-[#b76559] px-5 text-[13px] font-serif text-[#fffaf3] transition-all hover:-translate-y-0.5 hover:bg-[#9f584e] sm:flex">
               <ShoppingBag size={18} strokeWidth={1.8} /> <span className="hidden sm:inline">My bag</span>
               {cartCount > 0 && <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#c95b63] px-1 text-[10px] text-white">{cartCount}</span>}
             </button>
