@@ -273,3 +273,10 @@
 - [x] Product form ko live categories ke saath integrate karna.
 - [x] Linked-product safe delete confirmation aur validation add karna.
 - [x] Responsive UI, build, GitHub push aur checkpoint verify karna.
+
+## Open Graph social image
+
+- [x] Bazaar Editorial OG image brief aur 1200x630 social format lock karna.
+- [x] Branded OG image generate karke public web asset upload karna.
+- [x] `og:image` aur Twitter card metadata connect karna.
+- [x] Asset URL, metadata, build, GitHub push aur checkpoint verify karna.
