@@ -301,3 +301,10 @@
 - [x] Reusable mobile-accessible dark/light toggle aur shared placement add karna.
 - [x] Theme persistence, mobile menu behavior aur public page coverage verify karna.
 - [x] Build, GitHub push aur checkpoint verify karna.
+
+## Mobile hamburger navigation
+
+- [x] Existing Home mobile menu aur public page headers audit karna.
+- [x] Reusable compact mobile header aur hamburger navigation component banana.
+- [x] Public routes mein menu integrate karke desktop navigation preserve karna.
+- [x] Menu open/close, accessibility, responsive layout, build, GitHub push aur checkpoint verify karna.

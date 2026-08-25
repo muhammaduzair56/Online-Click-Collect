@@ -18,6 +18,7 @@ import DesignTemplates from "@/pages/DesignTemplates";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ThemeToggle from "./components/ThemeToggle";
+import MobileMenu from "./components/MobileMenu";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 
@@ -26,5 +27,5 @@ function Router() {
 }
 
 export default function App() {
-  return <ErrorBoundary><ThemeProvider defaultTheme="light" switchable><TooltipProvider><Toaster /><Router /><ThemeToggle /></TooltipProvider></ThemeProvider></ErrorBoundary>;
+  return <ErrorBoundary><ThemeProvider defaultTheme="light" switchable><TooltipProvider><Toaster /><Router /><ThemeToggle /><MobileMenu /></TooltipProvider></ThemeProvider></ErrorBoundary>;
 }

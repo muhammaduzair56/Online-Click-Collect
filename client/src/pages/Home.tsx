@@ -10,7 +10,6 @@ import {
   ChevronDown,
   Heart,
   MessageCircle,
-  Menu,
   LogIn,
   LogOut,
   UserPlus,
@@ -197,7 +196,6 @@ export default function Home() {
               <ShoppingBag size={18} strokeWidth={1.8} /> <span className="hidden sm:inline">My bag</span>
               {cartCount > 0 && <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#c95b63] px-1 text-[10px] text-white">{cartCount}</span>}
             </button>
-            <button onClick={() => setMenuOpen((open) => !open)} className="icon-button lg:hidden" aria-label="Open menu"><Menu size={20} /></button>
           </div>
         </div>
         {searchOpen && <div className="border-t border-[#eadfd3] bg-[#fffdf8] px-4 py-3"><div className="container relative"><Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#9b8980]" size={18} /><input autoFocus value={searchTerm} onFocus={() => setSearchSuggestionsOpen(true)} onChange={(event) => { setSearchTerm(event.target.value); setSearchSuggestionsOpen(true); }} onKeyDown={(event) => { if (event.key === "Escape") setSearchSuggestionsOpen(false); if (event.key === "Enter" && searchSuggestions[0]) chooseSearchSuggestion(searchSuggestions[0]); }} placeholder="Search useful finds..." aria-label="Search products with suggestions" className="w-full rounded-full border border-[#d8c7b8] bg-[#fffaf3] py-3 pl-11 pr-4 text-sm outline-none ring-[#c95b63] transition focus:ring-2" />{searchSuggestionsOpen && <div className="absolute left-4 right-4 top-[calc(100%+8px)] z-30 overflow-hidden rounded-2xl border border-[#dfc9b8] bg-[#fffaf3] p-2 shadow-[0_18px_38px_rgba(74,47,35,.16)]">{catalogLoading ? <div className="px-3 py-4 text-sm text-[#796b62]">Loading live products...</div> : catalogError ? <div className="px-3 py-4 text-sm text-[#b4444d]">Live catalog unavailable. Showing saved product data.</div> : searchSuggestions.length ? <><p className="px-3 pb-2 pt-1 text-[10px] font-bold uppercase tracking-[.16em] text-[#9a796b]">{searchTerm.trim() ? "Matching finds" : "Live product catalogue"}</p>{searchSuggestions.map((product) => <button key={product.id} onClick={() => chooseSearchSuggestion(product)} className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left transition hover:bg-[#f5ede3]"><img src={product.image} alt="" className="h-10 w-10 rounded-lg object-cover" /><span className="min-w-0 flex-1"><span className="block truncate text-sm font-bold text-[#231f20]">{product.name}</span><span className="block text-[11px] text-[#9a796b]">{product.category} · {formatPrice(product.price)}</span></span><ArrowRight size={15} className="text-[#c95b63]" /></button>)}</> : <div className="px-3 py-4 text-sm text-[#796b62]">No products match this search.</div>}</div>}</div></div>}
