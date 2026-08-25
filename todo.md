@@ -323,3 +323,11 @@
 - [x] Hamburger ko header scroll state ke saath align karna.
 - [x] Top/scrolled mobile states ko 360px, 390px aur 430px par verify karna.
 - [x] Build, GitHub push aur corrected checkpoint save karna.
+
+## Embedded Home mobile header correction
+
+- [x] Home ke floating/shared hamburger overlap ko document karna.
+- [x] Home header row ke andar reference-aligned hamburger embed karna.
+- [x] Secondary pages par shared menu preserve karke duplicate controls remove karna.
+- [x] Top, scrolled, open states aur multi-width responsive build verify karna.
+- [x] GitHub push aur corrected checkpoint save karna.

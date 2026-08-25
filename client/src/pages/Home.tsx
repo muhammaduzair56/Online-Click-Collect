@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { auth, fastApi } from "@/lib/api";
+import MobileMenu from "@/components/MobileMenu";
 
 const heroImage = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/eNpEabmfOdEnGTeq.jpg";
 const heroLeftImage = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663898260788/eEPuschtzmcFwIin.jpg";
@@ -173,7 +174,7 @@ export default function Home() {
       </div>
 
       <header className={`fixed inset-x-0 z-[60] border-b border-[#eadfd3] backdrop-blur-xl transition-[top,background-color,box-shadow] duration-200 ${isScrolled ? "top-0 bg-[#fffaf3]/98 shadow-[0_10px_30px_rgba(74,47,35,.14)]" : "top-[36px] bg-[#fffaf3]/95 shadow-[0_8px_24px_rgba(74,47,35,.06)]"}`} style={{ WebkitBackdropFilter: "blur(18px)" }}>
-        <div className="container flex h-[84px] items-center justify-between gap-6">
+        <div className="container relative flex h-[84px] items-center justify-between gap-3 sm:gap-6">
           <a href="#top" className="flex min-w-0 shrink items-center gap-3" aria-label="Online Click & Collect home">
             <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-[#dbb1a4] bg-[#f7dfd8] p-1 shadow-[0_7px_20px_rgba(35,31,32,0.08)]">
               <img src={markImage} alt="" className="h-full w-full object-contain" />
@@ -197,6 +198,7 @@ export default function Home() {
               {cartCount > 0 && <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#c95b63] px-1 text-[10px] text-white">{cartCount}</span>}
             </button>
           </div>
+          <MobileMenu embedded />
         </div>
         {searchOpen && <div className="border-t border-[#eadfd3] bg-[#fffdf8] px-4 py-3"><div className="container relative"><Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#9b8980]" size={18} /><input autoFocus value={searchTerm} onFocus={() => setSearchSuggestionsOpen(true)} onChange={(event) => { setSearchTerm(event.target.value); setSearchSuggestionsOpen(true); }} onKeyDown={(event) => { if (event.key === "Escape") setSearchSuggestionsOpen(false); if (event.key === "Enter" && searchSuggestions[0]) chooseSearchSuggestion(searchSuggestions[0]); }} placeholder="Search useful finds..." aria-label="Search products with suggestions" className="w-full rounded-full border border-[#d8c7b8] bg-[#fffaf3] py-3 pl-11 pr-4 text-sm outline-none ring-[#c95b63] transition focus:ring-2" />{searchSuggestionsOpen && <div className="absolute left-4 right-4 top-[calc(100%+8px)] z-30 overflow-hidden rounded-2xl border border-[#dfc9b8] bg-[#fffaf3] p-2 shadow-[0_18px_38px_rgba(74,47,35,.16)]">{catalogLoading ? <div className="px-3 py-4 text-sm text-[#796b62]">Loading live products...</div> : catalogError ? <div className="px-3 py-4 text-sm text-[#b4444d]">Live catalog unavailable. Showing saved product data.</div> : searchSuggestions.length ? <><p className="px-3 pb-2 pt-1 text-[10px] font-bold uppercase tracking-[.16em] text-[#9a796b]">{searchTerm.trim() ? "Matching finds" : "Live product catalogue"}</p>{searchSuggestions.map((product) => <button key={product.id} onClick={() => chooseSearchSuggestion(product)} className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left transition hover:bg-[#f5ede3]"><img src={product.image} alt="" className="h-10 w-10 rounded-lg object-cover" /><span className="min-w-0 flex-1"><span className="block truncate text-sm font-bold text-[#231f20]">{product.name}</span><span className="block text-[11px] text-[#9a796b]">{product.category} · {formatPrice(product.price)}</span></span><ArrowRight size={15} className="text-[#c95b63]" /></button>)}</> : <div className="px-3 py-4 text-sm text-[#796b62]">No products match this search.</div>}</div>}</div></div>}
         {menuOpen && <div className="border-t border-[#eadfd3] bg-[#fffdf8] px-4 py-4 lg:hidden"><div className="container grid gap-3 text-sm font-bold"><a href="#shop" onClick={() => setMenuOpen(false)}>Shop all</a><a href="#categories" onClick={() => setMenuOpen(false)}>Categories</a><a href="#how-it-works" onClick={() => setMenuOpen(false)}>How it works</a><a href="#story" onClick={() => setMenuOpen(false)}>Our story</a><a href="/track-order" onClick={() => setMenuOpen(false)}>Track order</a><a href={isAuthenticated ? "/profile" : "/login"} onClick={() => setMenuOpen(false)}>{isAuthenticated ? "Profile" : "Login"}</a>{!isAuthenticated && <a href="/signup" onClick={() => setMenuOpen(false)}>Create account</a>}{isAuthenticated && <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="text-left text-[#b76559]">Logout</button>}<a href="/faq" onClick={() => setMenuOpen(false)}>FAQs</a><a href="/contact" onClick={() => setMenuOpen(false)}>Contact</a></div></div>}
