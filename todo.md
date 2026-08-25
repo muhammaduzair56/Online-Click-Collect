@@ -280,3 +280,10 @@
 - [x] Branded OG image generate karke public web asset upload karna.
 - [x] `og:image` aur Twitter card metadata connect karna.
 - [x] Asset URL, metadata, build, GitHub push aur checkpoint verify karna.
+
+## Product social sharing
+
+- [x] Product detail route aur existing Quick View share action audit karna.
+- [x] Product page par WhatsApp share message aur Facebook share dialog add karna.
+- [x] Share URLs, popup behavior, responsive layout aur build verify karna.
+- [x] GitHub push aur final checkpoint save karna.
