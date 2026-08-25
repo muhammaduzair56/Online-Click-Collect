@@ -8,6 +8,7 @@ export type Order = { id: string; customer_name: string; phone: string; total: n
 export type Review = { order_number: string; rating: number; text: string };
 export type Address = { id: string; label: string; recipient_name: string; phone: string; city: string; address_line: string; landmark?: string; is_default: boolean };
 export type GalleryImage = { id: string; url: string; alt?: string; sort_order: number };
+export type Category = { id: string; name: string; is_active: boolean; product_count?: number };
 
 const API_BASE = (import.meta.env.VITE_FASTAPI_URL || "").replace(/\/$/, "");
 const TOKEN_KEY = "occ_access_token";
@@ -45,6 +46,11 @@ export const fastApi = {
   get isConfigured() { return Boolean(API_BASE); },
   get products() { return request<Product[]>("/api/products"); },
   getProduct: (id: string) => request<Product>(`/api/products/${id}`),
+  get categories() { return request<Category[]>("/api/categories"); },
+  get adminCategories() { return request<Category[]>("/api/admin/categories"); },
+  createCategory: (payload: { name: string; is_active?: boolean }) => request<Category>("/api/categories", { method: "POST", body: JSON.stringify(payload) }),
+  updateCategory: (id: string, payload: { name?: string; is_active?: boolean }) => request<Category>(`/api/categories/${id}`, { method: "PATCH", body: JSON.stringify(payload) }),
+  deleteCategory: (id: string, replacementCategory?: string) => request<{ ok: boolean }>(`/api/categories/${id}${replacementCategory ? `?replacement_category=${encodeURIComponent(replacementCategory)}` : ""}`, { method: "DELETE" }),
   get favorites() { return request<string[]>("/api/me/favorites"); },
   syncFavorites: (productIds: string[]) => request<{ ok: boolean }>("/api/me/favorites", { method: "PUT", body: JSON.stringify({ product_ids: productIds }) }),
   createProduct: (payload: Omit<Product, "id" | "is_active" | "old_price">) => request<Product>("/api/products", { method: "POST", body: JSON.stringify(payload) }),

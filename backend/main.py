@@ -7,6 +7,7 @@ from datetime import datetime, timedelta, timezone
 import hashlib
 import hmac
 import os
+import re
 import secrets
 from pathlib import Path
 from typing import Generator
@@ -67,6 +68,14 @@ class Product(Base):
     image_url: Mapped[str | None] = mapped_column(Text, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+
+class Category(Base):
+    __tablename__ = "categories"
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    name: Mapped[str] = mapped_column(String(120), unique=True, index=True, nullable=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
 
 
 class GalleryImage(Base):
@@ -271,6 +280,10 @@ def address_out(address: Address) -> dict:
     return {"id": address.id, "label": address.label, "recipient_name": address.recipient_name, "phone": address.phone, "city": address.city, "address_line": address.address_line, "landmark": address.landmark, "is_default": address.is_default}
 
 
+def category_out(category: Category, product_count: int = 0) -> dict:
+    return {"id": category.id, "name": category.name, "is_active": category.is_active, "product_count": product_count}
+
+
 def gallery_out(image: GalleryImage) -> dict:
     url = image.url if image.url.startswith("http") or not settings.public_base_url else f"{settings.public_base_url.rstrip('/')}{image.url}"
     return {"id": image.id, "url": url, "alt": image.alt, "sort_order": image.sort_order}
@@ -279,6 +292,14 @@ def gallery_out(image: GalleryImage) -> dict:
 @app.on_event("startup")
 def startup() -> None:
     Base.metadata.create_all(engine)
+    with SessionLocal() as db:
+        existing = {name.casefold() for name in db.scalars(select(Category.name)).all()}
+        product_names = db.scalars(select(Product.category).distinct()).all()
+        for name in product_names:
+            if name and name.casefold() not in existing:
+                slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") or secrets.token_hex(4)
+                db.add(Category(id=f"CAT-{slug[:48].upper()}", name=name.strip()))
+        db.commit()
 
 
 @app.get("/health")
@@ -314,6 +335,70 @@ def login(payload: AuthPayload, db: Session = Depends(get_db)) -> dict:
 @app.get("/api/auth/me")
 def me(user: User = Depends(current_user)) -> dict:
     return {"id": user.id, "name": user.name, "email": user.email, "is_admin": user.is_admin}
+
+
+@app.get("/api/categories")
+def categories(db: Session = Depends(get_db)) -> list[dict]:
+    return [{"id": item.id, "name": item.name, "is_active": item.is_active} for item in db.scalars(select(Category).where(Category.is_active.is_(True)).order_by(Category.name)).all()]
+
+
+@app.get("/api/admin/categories")
+def admin_categories(db: Session = Depends(get_db), _: User = Depends(admin_user)) -> list[dict]:
+    items = db.scalars(select(Category).order_by(Category.name)).all()
+    return [category_out(item, db.query(Product).filter(Product.category == item.name).count()) for item in items]
+
+
+@app.post("/api/categories")
+def create_category(payload: dict, db: Session = Depends(get_db), _: User = Depends(admin_user)) -> dict:
+    name = str(payload.get("name") or "").strip()
+    if not name or len(name) > 120:
+        raise HTTPException(status_code=422, detail="Category name is required and must be 120 characters or fewer")
+    if db.scalar(select(Category).where(Category.name.ilike(name))):
+        raise HTTPException(status_code=409, detail="A category with this name already exists")
+    slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") or secrets.token_hex(4)
+    category = Category(id=f"CAT-{slug[:48].upper()}-{secrets.token_hex(2).upper()}", name=name, is_active=payload.get("is_active", True))
+    db.add(category); db.commit(); db.refresh(category)
+    return category_out(category)
+
+
+@app.patch("/api/categories/{category_id}")
+def update_category(category_id: str, payload: dict, db: Session = Depends(get_db), _: User = Depends(admin_user)) -> dict:
+    category = db.get(Category, category_id)
+    if category is None:
+        raise HTTPException(status_code=404, detail="Category not found")
+    new_name = str(payload.get("name", category.name)).strip()
+    if not new_name or len(new_name) > 120:
+        raise HTTPException(status_code=422, detail="Category name is required and must be 120 characters or fewer")
+    duplicate = db.scalar(select(Category).where(Category.name.ilike(new_name), Category.id != category_id))
+    if duplicate:
+        raise HTTPException(status_code=409, detail="A category with this name already exists")
+    old_name = category.name
+    category.name = new_name
+    if old_name != new_name:
+        for product in db.scalars(select(Product).where(Product.category == old_name)).all():
+            product.category = new_name
+    if "is_active" in payload:
+        category.is_active = bool(payload["is_active"])
+    db.commit(); db.refresh(category)
+    return category_out(category, db.query(Product).filter(Product.category == category.name).count())
+
+
+@app.delete("/api/categories/{category_id}")
+def delete_category(category_id: str, replacement_category: str | None = None, db: Session = Depends(get_db), _: User = Depends(admin_user)) -> dict:
+    category = db.get(Category, category_id)
+    if category is None:
+        raise HTTPException(status_code=404, detail="Category not found")
+    linked = db.scalars(select(Product).where(Product.category == category.name)).all()
+    if linked and not replacement_category:
+        raise HTTPException(status_code=409, detail=f"{len(linked)} product(s) use this category. Rename it or provide a replacement category first.")
+    if linked:
+        replacement = db.scalar(select(Category).where(Category.name.ilike(replacement_category.strip()), Category.id != category_id, Category.is_active.is_(True)))
+        if replacement is None:
+            raise HTTPException(status_code=422, detail="Choose an existing active replacement category")
+        for product in linked:
+            product.category = replacement.name
+    db.delete(category); db.commit()
+    return {"ok": True}
 
 
 @app.get("/api/products")

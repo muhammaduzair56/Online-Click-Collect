@@ -19,6 +19,12 @@ CREATE TABLE IF NOT EXISTS products (
   is_active BOOLEAN NOT NULL DEFAULT TRUE,
   description TEXT
 );
+CREATE TABLE IF NOT EXISTS categories (
+  id VARCHAR(64) PRIMARY KEY,
+  name VARCHAR(120) NOT NULL UNIQUE,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
 CREATE TABLE IF NOT EXISTS gallery_images (
   id VARCHAR(64) PRIMARY KEY,
   product_id VARCHAR(64) NOT NULL REFERENCES products(id) ON DELETE CASCADE,
@@ -84,6 +90,7 @@ CREATE TABLE IF NOT EXISTS reviews (
   UNIQUE(user_id, order_id)
 );
 CREATE INDEX IF NOT EXISTS ix_products_category ON products(category);
+CREATE INDEX IF NOT EXISTS ix_categories_name ON categories(name);
 CREATE INDEX IF NOT EXISTS ix_orders_user_id ON orders(user_id);
 CREATE INDEX IF NOT EXISTS ix_orders_status ON orders(status);
 CREATE INDEX IF NOT EXISTS ix_gallery_product_id ON gallery_images(product_id);

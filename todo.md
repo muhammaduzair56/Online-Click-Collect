@@ -264,3 +264,12 @@
 - [x] Confirmation popup mein image context, Cancel aur Delete actions add karna.
 - [x] Explicit confirmation ke baad hi FastAPI delete request run karna.
 - [x] Cancel/delete behavior, responsive UI, build, GitHub push aur checkpoint verify karna.
+
+## Admin category management
+
+- [x] Current product categories, Admin navigation aur FastAPI contracts audit karna.
+- [x] Category CRUD backend model/endpoints add karna agar missing hon.
+- [x] Dedicated Category Manager UI mein add, edit aur list states banana.
+- [x] Product form ko live categories ke saath integrate karna.
+- [x] Linked-product safe delete confirmation aur validation add karna.
+- [x] Responsive UI, build, GitHub push aur checkpoint verify karna.
