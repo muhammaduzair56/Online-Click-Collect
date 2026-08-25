@@ -287,3 +287,10 @@
 - [x] Product page par WhatsApp share message aur Facebook share dialog add karna.
 - [x] Share URLs, popup behavior, responsive layout aur build verify karna.
 - [x] GitHub push aur final checkpoint save karna.
+
+## Native mobile sharing
+
+- [x] Product share controls aur Web Share capability handling audit karna.
+- [x] Native device share button aur product-aware share payload add karna.
+- [x] Unsupported browser fallback, cancel handling aur error/success feedback add karna.
+- [x] Mobile/desktop UI, build, GitHub push aur checkpoint verify karna.
